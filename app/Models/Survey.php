@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Survey extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'user_id', 'category_id'];
+    protected $fillable = ['title', 'description', 'user_id', 'category_id', 'end_date', 'status'];
 
     public function creator()
     {

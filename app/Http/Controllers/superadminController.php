@@ -32,4 +32,11 @@ class superadminController extends Controller
         $userId = $request->userId;
         return view('dashboard.edituser',compact(['userId']));
     }
+
+
+    public function allSurvay(Request $request)
+    {
+        return view('superAdmin.survayManagemnet');
+    }
+
 }

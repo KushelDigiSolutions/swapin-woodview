@@ -21,7 +21,9 @@ Route::get('/dashboard/allusers', [superadminController::class, 'allUsers'])->mi
 Route::get('/dashboard/adduser', [superadminController::class, 'addUser'])->middleware(['auth', 'verified'])->name('addUser');
 Route::get('/dashboard/edituser', [superadminController::class, 'editUser'])->middleware(['auth', 'verified'])->name('editUser');
 
- 
+
+Route::get('/dashboard/allSurvay', [superadminController::class, 'allSurvay'])->middleware(['auth', 'verified'])->name('allSurvay');
+
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

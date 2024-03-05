@@ -138,7 +138,7 @@
                         <ul id="dropdown-example1" class="hidden py-2 space-y-2">
 
                             <li class="flex">
-                                <a href="#"
+                                <a href="{{route('allSurvay')}}"
                                     class="flex items-center p-2 text-gray-500 hover:text-white rounded-lg dark:text-white  group">
                                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-white"
                                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
