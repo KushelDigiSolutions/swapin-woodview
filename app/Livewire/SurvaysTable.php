@@ -57,7 +57,7 @@ final class SurvaysTable extends PowerGridComponent
             ->add('category', fn (Survey $model) => Str::upper(e($model->category->name)))
             ->add('end_date_formatted', fn (Survey $model) => Carbon::parse($model->end_date)->format('d/m/Y'))
             ->add('status', function (Survey $model) {
-                return $model->status == "active"  ? "<span class='text-green-400   text-extrabold'>" . $model->status . "</span>" : "<span class='text-red-400   text-extrabold'>" . $model->status . "</span>";
+                return $model->status == "active"  ? "<span class='text-green-400   text-extrabold'>" . Str::upper($model->status). "</span>" : "<span class='text-red-400   text-extrabold'>" .  Str::upper($model->status) . "</span>";
             });
     }
 
@@ -121,7 +121,7 @@ final class SurvaysTable extends PowerGridComponent
 
                 ')
                 ->id()
-                ->class('bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded')
+                ->class('bg-amber-500 hover:bg-amber-700 text-white font-bold py-1 px-2 rounded')
                 ->dispatch('edit', ['rowId' => $row->id]),
 
             Button::add('delete')
@@ -138,6 +138,15 @@ final class SurvaysTable extends PowerGridComponent
                 ')
                 ->id()
                 ->class('bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded')
+                ->dispatch('delete', ['rowId' => $row->id]),
+
+            Button::add('note')
+                ->slot('
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.6667 12H15.6933C15.46 12.6067 15.1067 13.1667 14.6333 13.64L13.6467 14.6267C13.1733 15.1 12.6133 15.4533 12.0067 15.6867V12.66C12.0067 12.2933 12.3067 11.9933 12.6733 11.9933L12.6667 12ZM16 3.33333V10.34C16 10.4467 15.9933 10.5533 15.9867 10.6667H12.6667C11.5667 10.6667 10.6667 11.5667 10.6667 12.6667V15.9867C10.56 15.9933 10.4533 16 10.34 16H3.33333C1.49333 16 0 14.5067 0 12.6667V3.33333C0 1.49333 1.49333 0 3.33333 0H12.6667C14.5067 0 16 1.49333 16 3.33333Z" fill="white"/>
+                </svg>')
+                ->id()
+                ->class('bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded')
                 ->dispatch('delete', ['rowId' => $row->id])
 
         ];
