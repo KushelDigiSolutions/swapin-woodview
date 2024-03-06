@@ -32,12 +32,12 @@
                     </li>
                     <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
                         aria-current="page">
-                      Create Survay
+                       View Survay Response
                     </li>
                 </ol>
             </div>
             <div>
-                <a href="{{ route('createSurvay') }}"
+                <a href="{{ route('addUser') }}"
                     class="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor">
@@ -97,7 +97,7 @@
                         </div>
                     @endif
 
-                    <livewire:survays-table/>
+                   Create Survay
                 </div>
             </div>
         </div>

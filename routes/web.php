@@ -23,6 +23,7 @@ Route::get('/dashboard/edituser', [superadminController::class, 'editUser'])->mi
 
 
 Route::get('/dashboard/allSurvay', [superadminController::class, 'allSurvay'])->middleware(['auth', 'verified'])->name('allSurvay');
+Route::get('/dashboard/createSurvay', [superadminController::class, 'createSurvay'])->middleware(['auth', 'verified'])->name('createSurvay');
 
 
 Route::view('profile', 'profile')

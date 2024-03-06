@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\SurveyCategory;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -19,7 +20,7 @@ class superadminController extends Controller
     {
         $role_id = $request->role_id;
         $roleName = Role::findOrFail($role_id)->role_name;
-        return view('superAdmin.userManagement', compact(['role_id','roleName']));
+        return view('superAdmin.userManagement', compact(['role_id', 'roleName']));
     }
 
     public function addUser()
@@ -30,7 +31,7 @@ class superadminController extends Controller
     public function editUser(Request $request)
     {
         $userId = $request->userId;
-        return view('dashboard.edituser',compact(['userId']));
+        return view('dashboard.edituser', compact(['userId']));
     }
 
 
@@ -39,4 +40,15 @@ class superadminController extends Controller
         return view('superAdmin.survayManagemnet');
     }
 
+    public function createSurvay(Request $request)
+    {
+        $survayCategories = SurveyCategory::all();
+        
+        return view(
+            'superAdmin.createSurvay',
+            compact([
+                'survayCategories'
+            ])
+        );
+    }
 }
