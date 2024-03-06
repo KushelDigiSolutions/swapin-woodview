@@ -3,9 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Mail\SurvayInvitationMail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -22,7 +26,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
-        'manager_id'
+        'manager_id',
+        'inviteSend',
+        'survayCompleted'
     ];
 
     /**
@@ -53,5 +59,19 @@ class User extends Authenticatable
     public function notes()
     {
         return $this->hasMany(Note::class);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        // $this->notify(new CustomResetPassword($token));
+        $resetToken = $token;
+        $resetLink = URL::to('reset-password') . '/' . $resetToken . '?email=' . $this->email;
+
+        Mail::to($this)->send(new SurvayInvitationMail($resetLink));
+    }
+
+    public function subordinates()
+    {
+        return User::where('manager_id', $this->id)->get();
     }
 }

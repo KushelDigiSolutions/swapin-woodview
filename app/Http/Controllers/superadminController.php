@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SurvayInvitationMail;
+use App\Mail\SurvayReminderMail;
 use App\Models\Role;
+use App\Models\Survey;
 use App\Models\SurveyCategory;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\URL;
 
 class superadminController extends Controller
 {
@@ -43,12 +49,32 @@ class superadminController extends Controller
     public function createSurvay(Request $request)
     {
         $survayCategories = SurveyCategory::all();
-        
+
         return view(
             'superAdmin.createSurvay',
             compact([
                 'survayCategories'
             ])
         );
+    }
+
+    public function sendSurvayInvite(Request $request)
+    {
+        $user = User::findOrFail($request->userId);
+        $survay = Survey::first();
+
+        if ($user->inviteSend){
+            Mail::to($user)->send(new SurvayReminderMail());
+            return redirect()->route('UserManagement', ['role_id' => 1])->with('success_message', 'Survay Reminder sent to ' . $user->name . ' email (' . $user->email . ')');
+        }
+
+        $response = Password::sendResetLink(["email" => $user->email]);
+
+        if ($response == Password::RESET_LINK_SENT) {
+            $user->update(['inviteSend' => true]);
+            return redirect()->route('UserManagement', ['role_id' => 1])->with('success_message', 'Survay link sent to ' . $user->name . ' email (' . $user->email . ')');
+        } else {
+            return redirect()->route('UserManagement', ['role_id' => 1])->with('error_message', 'Unable to send  link');
+        }
     }
 }

@@ -25,6 +25,7 @@ Route::get('/dashboard/edituser', [superadminController::class, 'editUser'])->mi
 Route::get('/dashboard/allSurvay', [superadminController::class, 'allSurvay'])->middleware(['auth', 'verified'])->name('allSurvay');
 Route::get('/dashboard/createSurvay', [superadminController::class, 'createSurvay'])->middleware(['auth', 'verified'])->name('createSurvay');
 
+Route::get('/sendSurvayInvite',[superadminController::class,'sendSurvayInvite'])->middleware(['auth', 'verified'])->name('sendSurvayInvite');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

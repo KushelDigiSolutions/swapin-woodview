@@ -38,11 +38,14 @@ final class UserTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
+        
         if (in_array($this->role_id, [2, 3])) {
             return User::whereNot('role_id', 1)->where('role_id', $this->role_id)->with('role');
         } else {
+           
             return User::whereNot('role_id', 1)->with('role');
         }
+       
     }
 
     public function relationSearch(): array
@@ -100,9 +103,26 @@ final class UserTable extends PowerGridComponent
     #[\Livewire\Attributes\On('delete')]
     public function delete($rowId)
     {
-        $this->js('alert("This will delete, user: ' .  strtoupper(User::find($rowId)->name) . '")');
-        User::find($rowId)->delete();
-        $this->dispatch('$refresh');
+        
+        $user = User::findOrFail($rowId);
+
+        //check if user have employess under
+        $subordinates = $user->subordinates();
+        if ($subordinates->count() == 0){
+            $this->js('alert("This will delete, user: ' .  strtoupper(User::find($rowId)->name) . '")');
+            User::find($rowId)->delete();
+            $this->dispatch('$refresh');
+        }else{
+            $this->js('alert("Error : Cannot delete, user: ' .  strtoupper(User::find($rowId)->name) . 'Have Employees assigned under")');
+        }
+        
+        
+    }
+
+    #[\Livewire\Attributes\On('email')]
+    public function email($rowId)
+    {
+        return redirect()->route('sendSurvayInvite', ['userId' => $rowId]);
     }
 
     public function actions(User $row): array
@@ -122,7 +142,7 @@ final class UserTable extends PowerGridComponent
                 </svg>')
                 ->id()
                 ->class('bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded')
-                ->dispatch('edit', ['rowId' => $row->id]),
+                ->dispatch('email', ['rowId' => $row->id]),
 
             Button::add('edit')
                 ->slot('
