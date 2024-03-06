@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesTableSeeder::class,
             PermissionsTableSeeder::class,
+            UsersTableSeeder::class,
+            SurvaySeeder::class
         ]);
 
         $this->command->info('Database seeding completed successfully!');
