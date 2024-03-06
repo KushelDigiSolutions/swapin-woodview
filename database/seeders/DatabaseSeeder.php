@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             RolesTableSeeder::class,
             PermissionsTableSeeder::class,
             UsersTableSeeder::class,
-            SurvaySeeder::class
+            SurvaySeeder::class,
+            UserSurveySeeder::class
+
         ]);
 
         $this->command->info('Database seeding completed successfully!');

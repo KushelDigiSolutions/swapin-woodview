@@ -93,10 +93,16 @@ final class SurvaysTable extends PowerGridComponent
         $this->js('alert(' . $rowId . ')');
     }
 
+    #[\Livewire\Attributes\On('view')]
+    public function view($rowId)
+    {
+        return redirect()->route('viewSurvay', ['Id' => $rowId]);
+    }
+
     public function actions(Survey $row): array
     {
         return [
-            Button::add('email')
+            Button::add('view')
                 ->slot('<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15.8806 7.454C15.2952 6.174 12.9999 2 7.99991 2C2.99991 2 0.704581 6.174 0.119247 7.454C0.040673 7.62553 0 7.81199 0 8.00067C0 8.18934 0.040673 8.3758 0.119247 8.54733C0.704581 9.826 2.99991 14 7.99991 14C12.9999 14 15.2952 9.826 15.8806 8.546C15.959 8.37466 15.9996 8.18843 15.9996 8C15.9996 7.81157 15.959 7.62534 15.8806 7.454ZM7.99991 12C7.20879 12 6.43543 11.7654 5.77763 11.3259C5.11984 10.8864 4.60715 10.2616 4.3044 9.53073C4.00165 8.79983 3.92243 7.99556 4.07677 7.21964C4.23111 6.44372 4.61208 5.73098 5.17149 5.17157C5.7309 4.61216 6.44363 4.2312 7.21955 4.07686C7.99548 3.92252 8.79974 4.00173 9.53065 4.30448C10.2616 4.60723 10.8863 5.11992 11.3258 5.77772C11.7653 6.43552 11.9999 7.20887 11.9999 8C11.9989 9.06054 11.5771 10.0773 10.8272 10.8273C10.0773 11.5772 9.06045 11.9989 7.99991 12Z" fill="white"/>
                 <path d="M7.99992 10.6667C9.47268 10.6667 10.6666 9.47276 10.6666 8C10.6666 6.52724 9.47268 5.33334 7.99992 5.33334C6.52716 5.33334 5.33325 6.52724 5.33325 8C5.33325 9.47276 6.52716 10.6667 7.99992 10.6667Z" fill="white"/>
@@ -104,7 +110,7 @@ final class SurvaysTable extends PowerGridComponent
                 ')
                 ->id()
                 ->class('bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded')
-                ->dispatch('edit', ['rowId' => $row->id]),
+                ->dispatch('view', ['rowId' => $row->id]),
 
             Button::add('edit')
                 ->slot('

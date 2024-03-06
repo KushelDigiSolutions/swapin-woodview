@@ -46,6 +46,12 @@ class superadminController extends Controller
         return view('superAdmin.survayManagemnet');
     }
 
+    public function viewSurvay(Request $request)
+    {
+        $survey = Survey::findOrFail($request->Id);
+        return view('superAdmin.viewSurvay', compact(['survey']));
+    }
+
     public function createSurvay(Request $request)
     {
         $survayCategories = SurveyCategory::all();

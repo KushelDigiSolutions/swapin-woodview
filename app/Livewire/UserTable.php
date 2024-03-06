@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -38,14 +39,17 @@ final class UserTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        
+
         if (in_array($this->role_id, [2, 3])) {
             return User::whereNot('role_id', 1)->where('role_id', $this->role_id)->with('role');
         } else {
-           
-            return User::whereNot('role_id', 1)->with('role');
+
+            if (Auth::user()->role->id == 1) {
+                return User::whereNot('role_id', 1)->with('role');
+            }
+
+            return User::whereNot('role_id', 1)->where('manager_id', Auth::user()->id)->with('role');
         }
-       
     }
 
     public function relationSearch(): array
@@ -103,20 +107,18 @@ final class UserTable extends PowerGridComponent
     #[\Livewire\Attributes\On('delete')]
     public function delete($rowId)
     {
-        
+
         $user = User::findOrFail($rowId);
 
         //check if user have employess under
         $subordinates = $user->subordinates();
-        if ($subordinates->count() == 0){
+        if ($subordinates->count() == 0) {
             $this->js('alert("This will delete, user: ' .  strtoupper(User::find($rowId)->name) . '")');
             User::find($rowId)->delete();
             $this->dispatch('$refresh');
-        }else{
+        } else {
             $this->js('alert("Error : Cannot delete, user: ' .  strtoupper(User::find($rowId)->name) . 'Have Employees assigned under")');
         }
-        
-        
     }
 
     #[\Livewire\Attributes\On('email')]

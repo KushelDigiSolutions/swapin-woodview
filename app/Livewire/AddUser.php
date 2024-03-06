@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AddUser extends Component
 {
@@ -57,7 +58,6 @@ class AddUser extends Component
             'manager_id' =>  $this->reportsTo,
 
         ]);
-
 
 
         session()->flash('success_message', 'User :' . $this->name . ' successfully added.');

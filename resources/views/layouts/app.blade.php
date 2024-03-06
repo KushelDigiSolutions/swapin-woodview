@@ -36,6 +36,7 @@
             aria-label="Sidebar">
             <div class="h-full px-3 py-4 overflow-y-auto bg-[#000F2B]">
                 <ul class="space-y-2 font-medium">
+                    @if (Auth::user()->role->id <= 3)
                     <li>
                         <a href="#"
                             class="flex items-center p-2 text-gray-500 hover:text-white rounded-lg dark:text-white  group">
@@ -85,6 +86,7 @@
                                     <span class="ms-3">All Users</span>
                                 </a>
                             </li>
+                            @if(Auth::user()->role->id == 1)
                             <li class="flex">
                                 <a href="{{route('UserManagement',['role_id' => 3])}}"
                                     class="flex items-center p-2 text-gray-500 hover:text-white rounded-lg dark:text-white  group">
@@ -109,6 +111,7 @@
                                     <span class="ms-3">All Director</span>
                                 </a>
                             </li>
+                            @endif
                         </ul>
                     </li>
 
@@ -164,7 +167,43 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+                    @if(Auth::user()->role->id != 1)
+                    <li>
+                        <button onclick="func2()" type="button"
+                            class="flex items-center w-full p-2 text-base  transition duration-75 rounded-lg group text-gray-500 hover:text-white"
+                            aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                        
+                            <span class="flex-1  text-left rtl:text-right whitespace-nowrap">Your Surveys</span>
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 4 4 4-4" />
+                            </svg>
 
+                        </button>
+                        <ul id="dropdown-example2" class="hidden py-2 space-y-2">
+                            @foreach (Auth::user()->userSurveys as $userSurvey)
+                                
+                           
+                            <li class="flex">
+                                <a href="{{route('UserManagement',['role_id' => 1])}}"
+                                    class="flex items-center p-2 text-gray-500 hover:text-white rounded-lg dark:text-white  group">
+                                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 20 18">
+                                        <path
+                                            d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
+                                    </svg>
+                                    <span class="ms-3">{{$userSurvey->survey->title}}</span>
+                                </a>
+                            </li>
+
+                            @endforeach
+                           
+                        </ul>
+                    </li>
+                    @endif
                 </ul>
                 <div class="logout_test">
                     <a href="#"
@@ -212,6 +251,10 @@
         const func1 = () => {
             
             document.getElementById("dropdown-example1").classList.toggle("show");
+        }
+        const func2 = () => {
+            
+            document.getElementById("dropdown-example2").classList.toggle("show");
         }
     </script>
 

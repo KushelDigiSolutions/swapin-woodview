@@ -74,4 +74,9 @@ class User extends Authenticatable
     {
         return User::where('manager_id', $this->id)->get();
     }
+
+    public function userSurveys()
+    {
+        return $this->hasMany(UserSurvay::class, 'user_id');
+    }
 }
