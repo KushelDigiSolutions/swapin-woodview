@@ -38,9 +38,13 @@ class UsersTableSeeder extends Seeder
 
         $this->command->warn('User Table Truncated!');
 
-        $name = $this->command->ask('Enter name for the Super Admin:');
-        $email = $this->command->ask('Enter email for the Super Admin:');
-        $password = $this->command->secret('Enter password for the Super Admin:');
+        // $name = $this->command->ask('Enter name for the Super Admin:');
+        // $email = $this->command->ask('Enter email for the Super Admin:');
+        // $password = $this->command->secret('Enter password for the Super Admin:');
+
+        $name = "super";
+        $email = "superadmin@gmail.com";
+        $password = "12345678";
 
         // Create Super Admin
         $superAdmin = User::create([
