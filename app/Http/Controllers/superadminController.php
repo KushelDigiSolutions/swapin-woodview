@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
 
 class superadminController extends Controller
 {
@@ -64,12 +65,43 @@ class superadminController extends Controller
         );
     }
 
+
+    public function createNewSurvay(Request $request)
+    {
+
+        dd($request->all());
+
+        $validator = Validator::make($request->all(), [
+            'category_id' => ['required', 'integer', 'exists:survey_categories,id'], // Ensure category_id exists in the SurveyCategory model
+            'title' => 'required|string',
+            'description' => 'nullable|string', // Allow description to be nullable
+            'questions' => 'required|array|distinct', // Ensure questions are unique
+            'questions.*' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+
+        // $survayCategories = SurveyCategory::all();
+
+        // return view(
+        //     'superAdmin.createSurvay',
+        //     compact([
+        //         'survayCategories'
+        //     ])
+        // );
+    }
+
+
+
     public function sendSurvayInvite(Request $request)
     {
         $user = User::findOrFail($request->userId);
         $survay = Survey::first();
 
-        if ($user->inviteSend){
+        if ($user->inviteSend) {
             Mail::to($user)->send(new SurvayReminderMail());
             return redirect()->route('UserManagement', ['role_id' => 1])->with('success_message', 'Survay Reminder sent to ' . $user->name . ' email (' . $user->email . ')');
         }

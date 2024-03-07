@@ -99,7 +99,8 @@
 
 
 
-                    <form class="w-full max-w-full">
+                    <form class="w-full max-w-full" action="{{ route('createNewSurvay') }}" method="POST">
+                        @csrf
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -109,7 +110,7 @@
                                 <div class="relative">
                                     <select
                                         class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                        id="grid-state" name="category_id">
+                                        id="grid-state" name="category_id" required>
                                         @foreach ($survayCategories as $survayCategory)
                                             <option value="{{ $survayCategory->id }}">{{ $survayCategory->name }}
                                             </option>
@@ -136,7 +137,7 @@
                                 </label>
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-last-name" type="text" placeholder="Title" name="title">
+                                    id="grid-last-name" type="text" placeholder="Title" name="title" required>
                                 @error('category_id')
                                     <p class="text-red-500 text-xs italic">Please fill out this field.</p>
                                 @enderror
@@ -150,7 +151,7 @@
                                 </label>
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-password" type="text" placeholder="">
+                                    id="grid-password" type="text" placeholder="" name="descripton">
                                 <p class="text-gray-600 text-xs italic">Description is not mandatory</p>
                             </div>
                         </div>
@@ -162,7 +163,7 @@
                                     </label>
                                     <input
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                        x-model="question.text" placeholder="Survey Question" required>
+                                        x-model="question.text" placeholder="Survey Question" name="questions[]" required>
                                 </div>
                             </template>
 
@@ -178,6 +179,15 @@
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                     @click.prevent="questions.push({text: ''})">Add Question</button>
                             </div>
+                        </div>
+                        <div class="flex flex-row items-center space-x-2 justify-end">
+                            <!-- Submit Button -->
+                            <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
+
+                            <!-- Clear Button -->
+                            <button type="button"
+                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">Clear</button>
                         </div>
 
                     </form>
