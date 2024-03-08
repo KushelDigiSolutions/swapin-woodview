@@ -47,7 +47,7 @@
                     </svg>
                     Back
                 </a>
-               
+
             </div>
         </div>
     </x-slot>
@@ -168,87 +168,119 @@
                         <div x-show="openTab === 2"
                             class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-600 min-w-full">
                             <h2 class="text-2xl font-semibold mb-2 mx-4 text-blue-600">Edit Questions</h2>
+                            <div x-data="{ showConfirmation: false }">
+                                @foreach ($survey->questions as $question)
+                                    <div class="flex items-center gap-1 mb-2 mx-4">
+                                        <!-- First column -->
+                                        <div class="p-2 text-center">{{ $question->id }}</div>
 
-                            @foreach ($survey->questions as $question)
-                                <div class="flex items-center gap-1 mb-2 mx-4">
-                                    <!-- First column -->
-                                    <div class="p-2 text-center">{{ $question->id }}</div>
+                                        <!-- Second column -->
+                                        <div class="flex-1 flex bg-gray-200 p-2">
+                                            <!-- Input field -->
+                                            <form method="POST" action="{{ route('updateQuestion') }}"
+                                                class="flex items-center flex-1">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="id" value="{{ $question->id }}">
+                                                <input type="text" value="{{ $question->questionText }}"
+                                                    name="questionText"
+                                                    class="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-2 w-full">
+                                                <button type="submit"
+                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">
+                                                    Update
+                                                </button>
+                                                <button type="button"
+                                                onclick="confirmDelete({{ $question->id }})"
+                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                            <form id="delete-form-{{ $question->id }}"
+                                                action="{{ route('questions.delete', ['id' => 62]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
 
-                                    <!-- Second column -->
-                                    <div class="flex-1 flex bg-gray-200 p-2">
-                                        <!-- Input field -->
-                                        <form method="POST" action="{{ route('updateQuestion') }}"
-                                            class="flex items-center flex-1">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="id" value="{{ $question->id }}">
-                                            <input type="text" value="{{ $question->questionText }}"
-                                                name="questionText"
-                                                class="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-2 w-full">
-                                            <button type="submit"
-                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">
-                                                Update
-                                            </button>
-                                            <button type="button"
-                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled">
-                                                Delete
-                                            </button>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
+
                         </div>
 
                         <div x-show="openTab === 3"
                             class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-600 min-w-full">
                             <h2 class="text-2xl font-semibold mb-2 text-blue-600">Create Question</h2>
                             @php
-                               $heads =  $survey->questions->unique('part')->pluck('partTitle','part')->toArray();
+                                $heads = $survey->questions->unique('part')->pluck('partTitle', 'part')->toArray();
                             @endphp
-                            <div x-data="{ selectedPart: '', partTitles: {{json_encode($heads)}}}">
-                            <form action="{{ route('storeQuestion') }}" method="POST" class="w-full px-8 pt-6 pb-8 mb-4">
-                                @csrf
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div class="mb-4">
-                                        <label for="survey_id" class="block text-gray-700 font-bold mb-2">Survey:</label>
-                                        <select name="survey_id" id="survey_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                            <option value="{{$survey->id}}">{{$survey->title}}</option>
-                                        </select>
+                            <div x-data="{ selectedPart: '', partTitles: {{ json_encode($heads) }} }">
+                                <form action="{{ route('storeQuestion') }}" method="POST"
+                                    class="w-full px-8 pt-6 pb-8 mb-4">
+                                    @csrf
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="mb-4">
+                                            <label for="survey_id"
+                                                class="block text-gray-700 font-bold mb-2">Survey:</label>
+                                            <select name="survey_id" id="survey_id"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                required>
+                                                <option value="{{ $survey->id }}">{{ $survey->title }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="part"
+                                                class="block text-gray-700 font-bold mb-2">Part:</label>
+                                            <select name="part" id="part" x-model="selectedPart"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                required>
+                                                <option value="" disabled selected>Select Part</option>
+                                                <template x-for="(partTitle, partName) in partTitles"
+                                                    :key="partName">
+                                                    <option x-bind:value="partName" x-text="partName"></option>
+                                                </template>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="part" class="block text-gray-700 font-bold mb-2">Part:</label>
-                                        <select name="part" id="part" x-model="selectedPart" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                            <option value="" disabled selected>Select Part</option>
-                                            <template x-for="(partTitle, partName) in partTitles" :key="partName">
-                                                <option x-bind:value="partName" x-text="partName"></option>
-                                            </template>
-                                        </select>
+                                        <label for="partTitle" class="block text-gray-700 font-bold mb-2">Part
+                                            Title:</label>
+                                        <input type="text" name="partTitle" x-model="partTitles[selectedPart]"
+                                            id="partTitle"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            readonly>
                                     </div>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="partTitle" class="block text-gray-700 font-bold mb-2">Part Title:</label>
-                                    <input type="text" name="partTitle" x-model="partTitles[selectedPart]" id="partTitle" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="subTitle" class="block text-gray-700 font-bold mb-2">Sub Title: keep blank if no subtitle</label>
-                                    <input type="text" name="subTitle" id="subTitle" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-                                <div class="mb-4">
-                                    <label for="questionText" class="block text-gray-700 font-bold mb-2">Question Text:</label>
-                                    <textarea name="questionText" id="questionText" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="questionLegend" class="block text-gray-700 font-bold mb-2">Question Legend: keep blank if no legend</label>
-                                    <input type="text" name="questionLegend" id="questionLegend" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
-                                    <a href="" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Cancel</a>
-                                </div>
-                            </form>
-                        </div>
-                        
-                            
+                                    <div class="mb-4">
+                                        <label for="subTitle" class="block text-gray-700 font-bold mb-2">Sub Title:
+                                            keep blank if no subtitle</label>
+                                        <input type="text" name="subTitle" id="subTitle"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="questionText" class="block text-gray-700 font-bold mb-2">Question
+                                            Text:</label>
+                                        <textarea name="questionText" id="questionText" rows="4"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            required></textarea>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="questionLegend"
+                                            class="block text-gray-700 font-bold mb-2">Question Legend: keep blank if
+                                            no legend</label>
+                                        <input type="text" name="questionLegend" id="questionLegend"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button type="submit"
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
+                                        <a href=""
+                                            class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Cancel</a>
+                                    </div>
+                                </form>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -256,3 +288,10 @@
         </div>
     </div>
 </x-app-layout>
+<script>
+    function confirmDelete(questionId) {
+        if (confirm('Are you sure you want to delete this question?')) {
+            document.getElementById('delete-form-' + questionId).submit();
+        }
+    }
+</script>

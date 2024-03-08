@@ -32,6 +32,7 @@ Route::get('/dashboard/editSurvay', [superadminController::class, 'editSurvay'])
 Route::patch('/dashboard/updateSurvay', [superadminController::class, 'updateSurvay'])->middleware(['auth', 'verified'])->name('updateSurvay');
 Route::patch('/dashboard/updateQuestion', [superadminController::class, 'updateQuestion'])->middleware(['auth', 'verified'])->name('updateQuestion');
 Route::post('/dashboard/storeQuestion', [superadminController::class, 'storeQuestion'])->middleware(['auth', 'verified'])->name('storeQuestion');
+Route::delete('/questions/{id}', [superadminController::class, 'deleteQuestion'])->name('questions.delete');
 
 Route::get('/dashboard/viewSurvay', [superadminController::class, 'viewSurvay'])->middleware(['auth', 'verified'])->name('viewSurvay');
 
@@ -44,7 +45,7 @@ Route::get('/dashboard/viewSurvayStepFour', [superadminController::class, 'viewS
 Route::get('/dashboard/viewSurvayStepFive', [superadminController::class, 'viewSurvayStepfive'])->middleware(['auth', 'verified'])->name('viewSurvayStepfive');
 Route::get('/dashboard/viewSurvayStepSix', [superadminController::class, 'viewSurvayStepsix'])->middleware(['auth', 'verified'])->name('viewSurvayStepsix');
 
-Route::get('/sendSurvayInvite',[superadminController::class,'sendSurvayInvite'])->middleware(['auth', 'verified'])->name('sendSurvayInvite');
+Route::get('/sendSurvayInvite', [superadminController::class, 'sendSurvayInvite'])->middleware(['auth', 'verified'])->name('sendSurvayInvite');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

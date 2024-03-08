@@ -81,6 +81,13 @@ class superadminController extends Controller
         return back()->with('success_message', 'Question Added successfully.');
     }
 
+    public function deleteQuestion(Request $request, $id)
+    {
+
+        Question::destroy($id);
+        return back()->with('success_message', 'Question deleted successfully.');
+    }
+
     public function viewSurvay(Request $request)
     {
         $survey = Survey::findOrFail($request->Id);
