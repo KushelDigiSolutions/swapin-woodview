@@ -48,6 +48,32 @@ class superadminController extends Controller
         return view('superAdmin.survayManagemnet');
     }
 
+    public function editSurvay(Request $request)
+    {
+        $survey = Survey::findOrFail($request->Id);
+        return view('superAdmin.editSurvey', compact(['survey']));
+    }
+
+    public function updateQuestion(Request $request)
+    {
+
+        try {
+            $question = Question::findOrFail($request->id);
+            $question->update($request->all());
+            return back()->with('success_message', 'Question updated successfully.');
+        } catch (\Exception $e) {
+            return back()->with('error_message', 'Failed to update question.');
+        }
+    }
+
+    public function updateSurvay(Request $request)
+    {
+
+        $survey = Survey::findOrFail($request->id);
+        $survey->update($request->all());
+        return redirect()->route('editSurvay', ['Id' => $request->id]);
+    }
+
     public function viewSurvay(Request $request)
     {
         $survey = Survey::findOrFail($request->Id);

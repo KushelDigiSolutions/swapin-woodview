@@ -88,9 +88,9 @@ final class SurvaysTable extends PowerGridComponent
     // }
 
     #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
+    public function edit($rowId)
     {
-        $this->js('alert(' . $rowId . ')');
+        return redirect()->route('editSurvay', ['Id' => $rowId]);
     }
 
     #[\Livewire\Attributes\On('view')]

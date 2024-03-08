@@ -26,7 +26,15 @@ Route::get('/dashboard/allSurvay', [superadminController::class, 'allSurvay'])->
 Route::get('/dashboard/createSurvay', [superadminController::class, 'createSurvay'])->middleware(['auth', 'verified'])->name('createSurvay');
 Route::post('/dashboard/createNewSurvay', [superadminController::class, 'createNewSurvay'])->middleware(['auth', 'verified'])->name('createNewSurvay');
 
+
+
+Route::get('/dashboard/editSurvay', [superadminController::class, 'editSurvay'])->middleware(['auth', 'verified'])->name('editSurvay');
+Route::patch('/dashboard/updateSurvay', [superadminController::class, 'updateSurvay'])->middleware(['auth', 'verified'])->name('updateSurvay');
+Route::patch('/dashboard/updateQuestion', [superadminController::class, 'updateQuestion'])->middleware(['auth', 'verified'])->name('updateQuestion');
+
 Route::get('/dashboard/viewSurvay', [superadminController::class, 'viewSurvay'])->middleware(['auth', 'verified'])->name('viewSurvay');
+
+
 
 Route::get('/dashboard/viewSurvayStepOne', [superadminController::class, 'viewSurvayStepOne'])->middleware(['auth', 'verified'])->name('viewSurvayStepOne');
 Route::get('/dashboard/viewSurvayStepTwo', [superadminController::class, 'viewSurvaySteptwo'])->middleware(['auth', 'verified'])->name('viewSurvaySteptwo');

@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             SurvaySeeder::class,
             EvaluationSeeder::class,
-            UserSurveySeeder::class
-
+            UserSurveySeeder::class,
+            QuestionSeeder::class
         ]);
 
         $this->command->info('Database seeding completed successfully!');
