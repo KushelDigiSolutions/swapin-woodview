@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             UsersTableSeeder::class,
             SurvaySeeder::class,
+            EvaluationSeeder::class,
             UserSurveySeeder::class
 
         ]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\SurvayInvitationMail;
 use App\Mail\SurvayReminderMail;
+use App\Models\Question;
 use App\Models\Role;
 use App\Models\Survey;
 use App\Models\SurveyCategory;
@@ -52,6 +53,64 @@ class superadminController extends Controller
         $survey = Survey::findOrFail($request->Id);
         return view('superAdmin.viewSurvay', compact(['survey']));
     }
+
+    // public function viewSurvayStepOne(Request $request)
+    // {
+    //     $survey = Survey::findOrFail($request->Id);
+    //     $part = "Part II"
+    //     $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
+    //     //dd($part,$questions);
+    //     return view('survey.stepone', compact(['survey', 'part', 'questions']));
+    // }
+
+    public function viewSurvaySteptwo(Request $request)
+    {
+        $survey = Survey::findOrFail($request->Id);
+        $part = "Part II";
+        $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
+        //dd($part,$questions);
+        return view('survey.steptwo', compact(['survey', 'part', 'questions']));
+    }
+
+    public function viewSurvayStepthree(Request $request)
+    {
+        $survey = Survey::findOrFail($request->Id);
+        $part = "Part III";
+        $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
+        //dd($part,$questions);
+        return view('survey.stepthree', compact(['survey', 'part', 'questions']));
+    }
+
+    public function viewSurvayStepfour(Request $request)
+    {
+        $survey = Survey::findOrFail($request->Id);
+        $part = "Part IV";
+        $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
+        //dd($part,$questions);
+        return view('survey.stepfour', compact(['survey', 'part', 'questions']));
+    }
+
+    public function viewSurvayStepfive(Request $request)
+    {
+        $survey = Survey::findOrFail($request->Id);
+        $part = "Part V";
+        $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
+        //dd($part,$questions);
+        return view('survey.stepfive', compact(['survey', 'part', 'questions']));
+    }
+
+    public function viewSurvayStepsix(Request $request)
+    {
+        $survey = Survey::findOrFail($request->Id);
+        $part = "Part VI";
+        $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
+        //dd($part,$questions);
+        return view('survey.stepsix', compact(['survey', 'part', 'questions']));
+    }
+
+
+
+
 
     public function createSurvay(Request $request)
     {

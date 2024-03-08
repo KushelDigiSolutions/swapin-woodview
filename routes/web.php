@@ -28,6 +28,13 @@ Route::post('/dashboard/createNewSurvay', [superadminController::class, 'createN
 
 Route::get('/dashboard/viewSurvay', [superadminController::class, 'viewSurvay'])->middleware(['auth', 'verified'])->name('viewSurvay');
 
+Route::get('/dashboard/viewSurvayStepOne', [superadminController::class, 'viewSurvayStepOne'])->middleware(['auth', 'verified'])->name('viewSurvayStepOne');
+Route::get('/dashboard/viewSurvayStepTwo', [superadminController::class, 'viewSurvaySteptwo'])->middleware(['auth', 'verified'])->name('viewSurvaySteptwo');
+Route::get('/dashboard/viewSurvayStepThree', [superadminController::class, 'viewSurvayStepthree'])->middleware(['auth', 'verified'])->name('viewSurvayStepthree');
+Route::get('/dashboard/viewSurvayStepFour', [superadminController::class, 'viewSurvayStepfour'])->middleware(['auth', 'verified'])->name('viewSurvayStepfour');
+Route::get('/dashboard/viewSurvayStepFive', [superadminController::class, 'viewSurvayStepfive'])->middleware(['auth', 'verified'])->name('viewSurvayStepfive');
+Route::get('/dashboard/viewSurvayStepSix', [superadminController::class, 'viewSurvayStepsix'])->middleware(['auth', 'verified'])->name('viewSurvayStepsix');
+
 Route::get('/sendSurvayInvite',[superadminController::class,'sendSurvayInvite'])->middleware(['auth', 'verified'])->name('sendSurvayInvite');
 
 Route::view('profile', 'profile')

@@ -107,39 +107,50 @@
                         </div>
                         <div>
                             <span class="mr-2">Category: {{ $survey->category->name }}</span>
-                            <span>Created by: {{$survey->creator->name}}</span>
+                            <span>Created by: </span>
                         </div>
 
                     </div>
 
-                    <h2 class="text-xl font-bold mb-4 mx-4">Part I: Instructions</h2>
-                    <div class="p-4 space-y-4 text-justify">{!! $survey->description !!}</div>
+                    <h2 class="text-xl font-bold mb-4 mx-4">{{$part}}: {{$questions->first()->partTitle}}</h2>
+
+                    @foreach ($questions as $question)
+                    <div class="grid grid-cols-12 gap-1 mb-2 mx-4">
+                        <!-- First column with 1/12 width -->
+                        <div class="col-span-1 bg-gray-200 p-2 text-center">{{$question->id}}</div>
+                        
+                        <!-- Second column with 5/12 width -->
+                        <div class="col-span-7 bg-gray-200 p-2">{{$question->questionText}}</div>
+                        
+                        <!-- Third column with 3/12 width -->
+                        <div class="col-span-2 bg-gray-200 p-2">EEMETRFD</div>
+                        
+                        <!-- Fourth column with 3/12 width -->
+                        <div class="col-span-2 bg-gray-200 p-2">EEMETRFD</div>
+                    </div>
+                    @endforeach
+                    {{-- <div class="p-4 space-y-4 text-justify">{!! $survey->description !!}</div>
                     <h3 class="text-lg font-normal mb-4 mx-4">EVALUATION SCALE</h3>
                     <div class="overflow-x-auto mx-4">
                         <table class="table-auto border-collapse">
                             <tbody>
                                 @foreach ($survey->evaluation as $scale)
                                     <tr class="border">
-                                        <td class="border px-4 py-2 font-extrabold">{{ $scale->abbreviation }}</td>
-                                        <td class="border px-4 py-2 font-bold">{{ $scale->fullForm }}</td>
+                                        <td class="border px-4 py-2 text-extrabold">{{ $scale->abbreviation }}</td>
+                                        <td class="border px-4 py-2 text-bold">{{ $scale->fullForm }}</td>
                                         <td class="border px-4 py-2">{{ $scale->description }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
-                    <div class="font-bold mb-4 m-4 ">
-                        <strong>
-                            If you are unable to evaluate or comment within a specific area, please skip and move to the next area/review question.
-                        </strong>
-                    </div>
+                    </div> --}}
 
                     {{-- button --}}
                     <div class="flex justify-end my-6 mx-4 gap-x-1">
-                        {{-- <a href="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled">
+                        <a href="{{route('viewSurvay',['Id'=>$survey->id])}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Previous
-                        </a> --}}
-                        <a href="{{route('viewSurvaySteptwo',['Id' => $survey->id, 'part' => 'Part II'])}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        </a>
+                        <a href="{{route('viewSurvaySteptwo',['Id'=>$survey->id , 'part' => 'Part III'])}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Next
                         </a>
                     </div>
