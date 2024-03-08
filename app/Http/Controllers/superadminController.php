@@ -74,6 +74,13 @@ class superadminController extends Controller
         return redirect()->route('editSurvay', ['Id' => $request->id]);
     }
 
+    public function storeQuestion(Request $request)
+    {
+
+        Question::create($request->all());
+        return back()->with('success_message', 'Question Added successfully.');
+    }
+
     public function viewSurvay(Request $request)
     {
         $survey = Survey::findOrFail($request->Id);

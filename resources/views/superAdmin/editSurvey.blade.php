@@ -47,6 +47,7 @@
                     </svg>
                     Back
                 </a>
+               
             </div>
         </div>
     </x-slot>
@@ -96,7 +97,7 @@
                 </div>
             @endif
             <h1 class="text-2xl font-bold mb-4 mt-8 text-center">{{ $survey->title }}</h1>
-            <div class="bg-gray-100 font-sans flex h-screen items-center justify-center">
+            <div class="bg-gray-100 font-sans flex items-center justify-center">
                 <div x-data="{ openTab: 1 }" class="p-8 min-w-full">
                     <div class="min-w-full mx-auto">
                         <div class="mb-4 flex space-x-4 p-2 bg-white rounded-lg shadow-md">
@@ -109,8 +110,9 @@
                                 Questions
                             </button>
                             <button x-on:click="openTab = 3" :class="{ 'bg-blue-600 text-white': openTab === 3 }"
-                                class="flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Section
-                                3</button>
+                                class="flex-1 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">
+                                Add Question
+                            </button>
                         </div>
 
                         <div x-show="openTab === 1"
@@ -123,7 +125,7 @@
                                     <textarea name="description"
                                         class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500" rows="15">{!! $survey->description !!}</textarea>
                                     <button type="submit"
-                                        class="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 mt-2">Update</button>
+                                        class="w-1/3 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 mt-2">Update</button>
                                 </form>
                             </div>
 
@@ -156,10 +158,10 @@
                                 {{-- <a href="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled">
                             Previous
                         </a> --}}
-                                <a href="{{ route('viewSurvaySteptwo', ['Id' => $survey->id, 'part' => 'Part II']) }}"
+                                {{-- <a href="{{ route('viewSurvaySteptwo', ['Id' => $survey->id, 'part' => 'Part II']) }}"
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                     Next
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
 
@@ -199,10 +201,54 @@
 
                         <div x-show="openTab === 3"
                             class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-600 min-w-full">
-                            <h2 class="text-2xl font-semibold mb-2 text-blue-600">Section 3 Content</h2>
-                            <p class="text-gray-700">Fusce hendrerit urna vel tortor luctus, nec tristique odio
-                                tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-                                cubilia Curae.</p>
+                            <h2 class="text-2xl font-semibold mb-2 text-blue-600">Create Question</h2>
+                            @php
+                               $heads =  $survey->questions->unique('part')->pluck('partTitle','part')->toArray();
+                            @endphp
+                            <div x-data="{ selectedPart: '', partTitles: {{json_encode($heads)}}}">
+                            <form action="{{ route('storeQuestion') }}" method="POST" class="w-full px-8 pt-6 pb-8 mb-4">
+                                @csrf
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="mb-4">
+                                        <label for="survey_id" class="block text-gray-700 font-bold mb-2">Survey:</label>
+                                        <select name="survey_id" id="survey_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                            <option value="{{$survey->id}}">{{$survey->title}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="part" class="block text-gray-700 font-bold mb-2">Part:</label>
+                                        <select name="part" id="part" x-model="selectedPart" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                            <option value="" disabled selected>Select Part</option>
+                                            <template x-for="(partTitle, partName) in partTitles" :key="partName">
+                                                <option x-bind:value="partName" x-text="partName"></option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="partTitle" class="block text-gray-700 font-bold mb-2">Part Title:</label>
+                                    <input type="text" name="partTitle" x-model="partTitles[selectedPart]" id="partTitle" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="subTitle" class="block text-gray-700 font-bold mb-2">Sub Title: keep blank if no subtitle</label>
+                                    <input type="text" name="subTitle" id="subTitle" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="questionText" class="block text-gray-700 font-bold mb-2">Question Text:</label>
+                                    <textarea name="questionText" id="questionText" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="questionLegend" class="block text-gray-700 font-bold mb-2">Question Legend: keep blank if no legend</label>
+                                    <input type="text" name="questionLegend" id="questionLegend" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
+                                    <a href="" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Cancel</a>
+                                </div>
+                            </form>
+                        </div>
+                        
+                            
                         </div>
                     </div>
                 </div>

@@ -31,6 +31,7 @@ Route::post('/dashboard/createNewSurvay', [superadminController::class, 'createN
 Route::get('/dashboard/editSurvay', [superadminController::class, 'editSurvay'])->middleware(['auth', 'verified'])->name('editSurvay');
 Route::patch('/dashboard/updateSurvay', [superadminController::class, 'updateSurvay'])->middleware(['auth', 'verified'])->name('updateSurvay');
 Route::patch('/dashboard/updateQuestion', [superadminController::class, 'updateQuestion'])->middleware(['auth', 'verified'])->name('updateQuestion');
+Route::post('/dashboard/storeQuestion', [superadminController::class, 'storeQuestion'])->middleware(['auth', 'verified'])->name('storeQuestion');
 
 Route::get('/dashboard/viewSurvay', [superadminController::class, 'viewSurvay'])->middleware(['auth', 'verified'])->name('viewSurvay');
 
