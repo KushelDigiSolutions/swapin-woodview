@@ -189,14 +189,13 @@
                                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">
                                                     Update
                                                 </button>
-                                                <button type="button"
-                                                onclick="confirmDelete({{ $question->id }})"
+                                                <button type="button" onclick="confirmDelete({{ $question->id }})"
                                                     class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                                                     Delete
                                                 </button>
                                             </form>
                                             <form id="delete-form-{{ $question->id }}"
-                                                action="{{ route('questions.delete', ['id' => 62]) }}"
+                                                action="{{ route('questions.delete', ['id' => $question->id]) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -214,6 +213,16 @@
                             <h2 class="text-2xl font-semibold mb-2 text-blue-600">Create Question</h2>
                             @php
                                 $heads = $survey->questions->unique('part')->pluck('partTitle', 'part')->toArray();
+                                if (count($survey->questions) == 0) {
+                                    $heads = array_flip([
+                                        'Evaluation of Woodview’s Leadership Based Competencies' => 'Part II',
+                                        'Additional Activities & Successes' => 'Part III',
+                                        'Manager and Agency Feedback' => 'Part IV',
+                                        'Development and Goals' => 'Part V',
+                                        'Director Comments' => 'Part VI',
+                                    ]);
+                                }
+
                             @endphp
                             <div x-data="{ selectedPart: '', partTitles: {{ json_encode($heads) }} }">
                                 <form action="{{ route('storeQuestion') }}" method="POST"

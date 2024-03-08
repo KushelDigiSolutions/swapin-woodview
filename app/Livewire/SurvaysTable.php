@@ -57,7 +57,7 @@ final class SurvaysTable extends PowerGridComponent
             ->add('category', fn (Survey $model) => Str::upper(e($model->category->name)))
             ->add('end_date_formatted', fn (Survey $model) => Carbon::parse($model->end_date)->format('d/m/Y'))
             ->add('status', function (Survey $model) {
-                return $model->status == "active"  ? "<span class='text-green-400   text-extrabold'>" . Str::upper($model->status). "</span>" : "<span class='text-red-400   text-extrabold'>" .  Str::upper($model->status) . "</span>";
+                return $model->status == "active"  ? "<span class='text-green-400   text-extrabold'>" . Str::upper($model->status) . "</span>" : "<span class='text-red-400   text-extrabold'>" .  Str::upper($model->status) . "</span>";
             });
     }
 
@@ -97,6 +97,23 @@ final class SurvaysTable extends PowerGridComponent
     public function view($rowId)
     {
         return redirect()->route('viewSurvay', ['Id' => $rowId]);
+    }
+
+    #[\Livewire\Attributes\On('delete')]
+    public function delete($rowId)
+    {
+        // Fetch the survey record
+        $survey = Survey::findOrFail($rowId);
+
+        // Delete associated records, if any
+        // Assuming there is a relationship between Survey and related records
+        $survey->questions()->delete();
+
+        // Delete the survey record
+        $survey->delete();
+
+        // Refresh the Livewire component
+        $this->refresh();
     }
 
     public function actions(Survey $row): array

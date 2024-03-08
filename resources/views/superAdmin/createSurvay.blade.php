@@ -130,7 +130,7 @@
                                 @enderror
 
                             </div>
-                            <div class="w-full md:w-2/3 px-3">
+                            <div class="w-full md:w-1/3 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                     for="grid-last-name">
                                     Title
@@ -138,6 +138,18 @@
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-last-name" type="text" placeholder="Title" name="title" required>
+                                @error('category_id')
+                                    <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+                                @enderror
+                            </div>
+                            <div class="w-full md:w-1/3 px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                    for="grid-last-name">
+                                    End Date
+                                </label>
+                                <input
+                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-last-name" type="date"  name="end_date" required>
                                 @error('category_id')
                                     <p class="text-red-500 text-xs italic">Please fill out this field.</p>
                                 @enderror
@@ -151,39 +163,15 @@
                                 </label>
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-password" type="text" placeholder="" name="descripton">
-                                <p class="text-gray-600 text-xs italic">Description is not mandatory</p>
+                                    id="grid-password" type="text" placeholder="" name="descripton" required>
+                               
                             </div>
                         </div>
-                        <div class="flex flex-wrap -mx-3 mb-2" x-data="{ questions: [] }">
-                            <template x-for="(question, index) in questions" :key="index">
-                                <div class="w-full md:w-2/3 px-3 mb-6 md:mb-0">
-                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                        Question <span x-text="index +1"></span>
-                                    </label>
-                                    <input
-                                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                        x-model="question.text" placeholder="Survey Question" name="questions[]" required>
-                                </div>
-                            </template>
-
-                            <div class="w-full md:w-1/3 px-3 md:mb-0 flex justify-end items-end"
-                                x-show="questions.length > 0">
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                    @click.prevent="questions.push({text: ''})">Add Question</button>
-                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-                                    @click.prevent="questions.pop()">Delete Question</button>
-                            </div>
-                            <div class="w-full md:w-full px-3 mb-2 md:mb-0 flex justify-start items-center"
-                                x-show="questions.length === 0">
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                    @click.prevent="questions.push({text: ''})">Add Question</button>
-                            </div>
-                        </div>
+                      
                         <div class="flex flex-row items-center space-x-2 justify-end">
                             <!-- Submit Button -->
                             <button type="submit"
-                                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
+                                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Create</button>
 
                             <!-- Clear Button -->
                             <button type="button"

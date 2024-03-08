@@ -10,6 +10,7 @@ use App\Models\Survey;
 use App\Models\SurveyCategory;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\URL;
@@ -84,8 +85,12 @@ class superadminController extends Controller
     public function deleteQuestion(Request $request, $id)
     {
 
-        Question::destroy($id);
-        return back()->with('success_message', 'Question deleted successfully.');
+        $a = Question::destroy($id);
+        if ($a){
+            return back()->with('success_message', 'Question deleted successfully.');
+        }
+        return back()->with('error_message', 'Something went worng.');
+        
     }
 
     public function viewSurvay(Request $request)
@@ -122,7 +127,7 @@ class superadminController extends Controller
     }
 
     public function viewSurvayStepfour(Request $request)
-    {
+    { 
         $survey = Survey::findOrFail($request->Id);
         $part = "Part IV";
         $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
@@ -168,29 +173,26 @@ class superadminController extends Controller
     public function createNewSurvay(Request $request)
     {
 
-        dd($request->all());
+        
 
         $validator = Validator::make($request->all(), [
             'category_id' => ['required', 'integer', 'exists:survey_categories,id'], // Ensure category_id exists in the SurveyCategory model
             'title' => 'required|string',
             'description' => 'nullable|string', // Allow description to be nullable
-            'questions' => 'required|array|distinct', // Ensure questions are unique
-            'questions.*' => 'required|string',
+           
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $a = Survey::create($request->all()+['status'=>"active","user_id" => Auth::user()->id]);
+        $survayCategories = SurveyCategory::all();
 
-        // $survayCategories = SurveyCategory::all();
-
-        // return view(
-        //     'superAdmin.createSurvay',
-        //     compact([
-        //         'survayCategories'
-        //     ])
-        // );
+        if ($a){
+            return back()->with('success_message', 'Survey Created successfully.');
+        }
+        return back()->with('error_message', 'Something went worng.');
     }
 
 
