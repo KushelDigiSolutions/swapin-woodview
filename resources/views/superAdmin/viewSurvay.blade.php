@@ -56,6 +56,17 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-100 text-sm">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="p-6 space-y-2 bg-gray-100 text-gray-800">
+                        <h3 class="text-base font-semibold">Part I: Instructions</h3>
+                        <div class="flex gap-3">
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                        </div>
+                    </div>
                     @if (session()->has('success_message'))
                         <div class="rounded-md bg-green-50 p-4 mb-4">
                             <div class="flex">
@@ -97,7 +108,10 @@
                             </div>
                         </div>
                     @endif
-                    <h1 class="text-2xl font-bold mb-4 mt-6 text-center">{{ $survey->title }}</h1>
+                    <h1 class="text-2xl font-bold mb-4 mt-8 text-center">{{ $survey->title }}</h1>
+
+
+
                     <div class="flex items-center text-sm text-gray-500 mb-2 mx-4 justify-between">
                         <div>
                             <span class="mr-2">End Date: {{ $survey->end_date }}</span>
@@ -107,12 +121,11 @@
                         </div>
                         <div>
                             <span class="mr-2">Category: {{ $survey->category->name }}</span>
-                            <span>Created by: {{$survey->creator->name}}</span>
+                            <span>Created by: {{ $survey->creator->name }}</span>
                         </div>
-
                     </div>
 
-                    <h2 class="text-xl font-bold mb-4 mx-4">Part I: Instructions</h2>
+                    <h2 class="text-xl font-bold mb-10 mx-4">Part I: Instructions</h2>
                     <div class="p-4 space-y-4 text-justify">{!! $survey->description !!}</div>
                     <h3 class="text-lg font-normal mb-4 mx-4">EVALUATION SCALE</h3>
                     <div class="overflow-x-auto mx-4">
@@ -130,7 +143,8 @@
                     </div>
                     <div class="font-bold mb-4 m-4 ">
                         <strong>
-                            If you are unable to evaluate or comment within a specific area, please skip and move to the next area/review question.
+                            If you are unable to evaluate or comment within a specific area, please skip and move to the
+                            next area/review question.
                         </strong>
                     </div>
 
@@ -139,7 +153,8 @@
                         {{-- <a href="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled">
                             Previous
                         </a> --}}
-                        <a href="{{route('viewSurvaySteptwo',['Id' => $survey->id, 'part' => 'Part II'])}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <a href="{{ route('viewSurvaySteptwo', ['Id' => $survey->id, 'part' => 'Part II']) }}"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Next
                         </a>
                     </div>

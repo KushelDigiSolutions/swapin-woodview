@@ -56,6 +56,17 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-100 text-sm">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="p-6 space-y-2 bg-gray-100 text-gray-800">
+                        <h3 class="text-base font-semibold">{{$part}}: {{$questions->first()->partTitle}}</h3>
+                        <div class="flex gap-3">
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                        </div>
+                    </div>
                     @if (session()->has('success_message'))
                         <div class="rounded-md bg-green-50 p-4 mb-4">
                             <div class="flex">
@@ -114,44 +125,39 @@
 
                     <h2 class="text-xl font-bold mb-4 mx-4">{{$part}}: {{$questions->first()->partTitle}}</h2>
 
-                    @foreach ($questions as $question)
-                    <div class="grid grid-cols-12 gap-1 mb-2 mx-4">
-                        <!-- First column with 1/12 width -->
-                        <div class="col-span-1 bg-gray-200 p-2 text-center">{{$question->id}}</div>
-                        
-                        <!-- Second column with 5/12 width -->
-                        <div class="col-span-7 bg-gray-200 p-2">
-                            {{$question->questionText}}
-                            @if($question->questionLegend != null)
-                            <br>
-                            <span class="text-xs text-blue-400">
-                                {{$question->questionLegend}}
-                            </span>
+                    @php
+                        $subheads = $questions->pluck('subTitle')->unique()->toArray();
+                    @endphp
+                    
+                    @foreach ($subheads as $subhead)
+                        <h3 class="font-bold mb-4 mt-4 mx-4">{{ Str::upper($subhead) }}</h3>
+                        @foreach ($questions as $question)
+                            @if ($question->subTitle == $subhead)
+                                <div class="grid grid-cols-12 gap-1 mb-2 mx-4">
+                                    <!-- First column with 1/12 width -->
+                                    <div class="col-span-1 bg-gray-200 p-2 text-center">{{ $question->id }}</div>
+
+                                    <!-- Second column with 5/12 width -->
+                                    <div class="col-span-7 bg-gray-200 p-2">
+                                        {{ $question->questionText }}
+                                        @if ($question->questionLegend != null)
+                                            <br>
+                                            <span class="text-xs text-blue-400">
+                                                {{ $question->questionLegend }}
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    <!-- Third column with 3/12 width -->
+                                    <div class="col-span-2 bg-gray-200 p-2"></div>
+
+                                    <!-- Fourth column with 3/12 width -->
+                                    <div class="col-span-2 bg-gray-200 p-2"></div>
+                                </div>
                             @endif
-                        </div>
-                        
-                        <!-- Third column with 3/12 width -->
-                        <div class="col-span-2 bg-gray-200 p-2">EEMETRFD</div>
-                        
-                        <!-- Fourth column with 3/12 width -->
-                        <div class="col-span-2 bg-gray-200 p-2">EEMETRFD</div>
-                    </div>
+                        @endforeach
                     @endforeach
-                    {{-- <div class="p-4 space-y-4 text-justify">{!! $survey->description !!}</div>
-                    <h3 class="text-lg font-normal mb-4 mx-4">EVALUATION SCALE</h3>
-                    <div class="overflow-x-auto mx-4">
-                        <table class="table-auto border-collapse">
-                            <tbody>
-                                @foreach ($survey->evaluation as $scale)
-                                    <tr class="border">
-                                        <td class="border px-4 py-2 text-extrabold">{{ $scale->abbreviation }}</td>
-                                        <td class="border px-4 py-2 text-bold">{{ $scale->fullForm }}</td>
-                                        <td class="border px-4 py-2">{{ $scale->description }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div> --}}
+
 
                     {{-- button --}}
                     <div class="flex justify-end my-6 mx-4 gap-x-1">
