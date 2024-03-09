@@ -19,10 +19,81 @@
         .show {
             display: block !important;
         }
-
+    
         .logout_test {
             position: fixed;
             bottom: 40px;
+        }
+    
+        .dfg h2 {
+            color: #060606;
+            font-weight: 400;
+            font-size: 16px;
+            font-weight: 500;
+        }
+    
+        .tabelo {
+            background-color: white;
+            padding-bottom: 20px;
+            padding-top: 10px;
+        }
+    
+        .sof {
+            height: 100vh;
+        }
+    
+        .toto span {
+            color: #293240;
+            font-size: 16px;
+            font-weight: 400;
+        }
+    
+        .bgh {
+            background-color: #f4fbff;
+        }
+    
+        /* ===========dashboard css============ */
+       
+        .dash_box{
+            margin: 10px;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 25px 25px -5px rgba(40, 47, 50, 0.15), 0 10px 10px -5px rgba(40, 47, 50, 0.1);
+        }
+        .dashboard{
+            margin: 0px 10px;
+        }
+        .dashboard .dd{
+            color: #060606;
+            font-weight: 400;
+            font-size: 18px;
+        }
+        .dash_box h2{
+            color: #FFFFFF;
+            font-weight: 400;
+            font-size: 24px;
+        }
+        .dash_box p{
+            color: #FFFFFF;
+            font-weight: 400;
+            font-size: 16px;
+        }
+        .flex_btn{
+            margin-top: 10px;
+        }
+        .flex_btn button{
+            width: 64px;
+            height: 24px;
+            border-radius: 3px;
+            color: #060606;
+            font-weight: 400;
+            font-size: 12px;
+            background-color: #FFFFFF;
+        }
+        @media only screen and (max-width:1100px){
+            .dash_card{
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>

@@ -2,12 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Mail\UserCreatedMail;
 use App\Models\Role;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 
 class AddUser extends Component
 {
@@ -26,7 +28,7 @@ class AddUser extends Component
     {
         $this->user = new User();
         $this->users = User::all();
-        $this->roles = Role::where('id','>',Auth::user()->role_id)->get();
+        $this->roles = Role::where('id', '>', Auth::user()->role_id)->get();
     }
 
     protected $rules = [
@@ -50,7 +52,7 @@ class AddUser extends Component
 
 
 
-        User::create([
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($password),
@@ -62,12 +64,18 @@ class AddUser extends Component
 
         session()->flash('success_message', 'User :' . $this->name . ' successfully added.');
 
+        $manager = User::find($this->reportsTo);
+        // $response = Password::sendResetLink(["email" => $this->email]);
+        Mail::to($manager)->send(new  UserCreatedMail());
+       
         $this->reset();
-        $this->roles = Role::where('id','>',Auth::user()->role_id)->get();
+        $this->roles = Role::where('id', '>', Auth::user()->role_id)->get();
     }
 
     public function openDiv()
     {
+
+
         $this->users = User::where('role_id', '<', $this->role_id)->get();
         $this->showDiv = !$this->showDiv;
     }
