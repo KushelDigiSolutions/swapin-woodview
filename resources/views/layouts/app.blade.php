@@ -225,7 +225,7 @@
                             </li>
 
                             <li class="flex">
-                                <a href="{{route('allSurvay')}}"
+                                <a href="{{route('responseSurvay')}}"
                                     class="flex items-center p-2 text-gray-500 hover:text-white rounded-lg dark:text-white  group">
                                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-white"
                                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -239,7 +239,7 @@
                         </ul>
                     </li>
                     @endif
-                    @if(Auth::user()->role->id != 1)
+                    @if(Auth::user()->role->id != 1 )
                     <li>
                         <button onclick="func2()" type="button"
                             class="flex items-center w-full p-2 text-base  transition duration-75 rounded-lg group text-gray-500 hover:text-white"
@@ -256,9 +256,8 @@
                         <ul id="dropdown-example2" class="hidden py-2 space-y-2">
                             @foreach (Auth::user()->userSurveys as $userSurvey)
                                 
-                           
                             <li class="flex">
-                                <a href="{{route('UserManagement',['role_id' => 1])}}"
+                                <a href="{{route('survey',['surveyId' => $userSurvey->survey->id])}}"
                                     class="flex items-center p-2 text-gray-500 hover:text-white rounded-lg dark:text-white  group">
                                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white"
                                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -275,6 +274,8 @@
                         </ul>
                     </li>
                     @endif
+
+
                 </ul>
                 <div class="logout_test">
                     <a href="#"

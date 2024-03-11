@@ -10,6 +10,7 @@ use App\Models\Survey;
 use App\Models\SurveyCategory;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserSurvay;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
@@ -49,6 +50,12 @@ class superadminController extends Controller
         return view('superAdmin.survayManagemnet');
     }
 
+    public function responseSurvay(Request $request)
+    {
+        $usersurveys = UserSurvay::all();
+        return view('superAdmin.survayResponse', compact(['usersurveys']));
+    }
+
     public function editSurvay(Request $request)
     {
         $survey = Survey::findOrFail($request->Id);
@@ -86,11 +93,10 @@ class superadminController extends Controller
     {
 
         $a = Question::destroy($id);
-        if ($a){
+        if ($a) {
             return back()->with('success_message', 'Question deleted successfully.');
         }
         return back()->with('error_message', 'Something went worng.');
-        
     }
 
     public function viewSurvay(Request $request)
@@ -127,7 +133,7 @@ class superadminController extends Controller
     }
 
     public function viewSurvayStepfour(Request $request)
-    { 
+    {
         $survey = Survey::findOrFail($request->Id);
         $part = "Part IV";
         $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
@@ -173,23 +179,23 @@ class superadminController extends Controller
     public function createNewSurvay(Request $request)
     {
 
-        
+
 
         $validator = Validator::make($request->all(), [
             'category_id' => ['required', 'integer', 'exists:survey_categories,id'], // Ensure category_id exists in the SurveyCategory model
             'title' => 'required|string',
             'description' => 'nullable|string', // Allow description to be nullable
-           
+
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $a = Survey::create($request->all()+['status'=>"active","user_id" => Auth::user()->id]);
+        $a = Survey::create($request->all() + ['status' => "active", "user_id" => Auth::user()->id]);
         $survayCategories = SurveyCategory::all();
 
-        if ($a){
+        if ($a) {
             return back()->with('success_message', 'Survey Created successfully.');
         }
         return back()->with('error_message', 'Something went worng.');
@@ -200,19 +206,51 @@ class superadminController extends Controller
     public function sendSurvayInvite(Request $request)
     {
         $user = User::findOrFail($request->userId);
-        $survay = Survey::first();
+        $surveys = Survey::all();
 
-        if ($user->inviteSend) {
-            Mail::to($user)->send(new SurvayReminderMail());
-            return redirect()->route('UserManagement', ['role_id' => 1])->with('success_message', 'Survay Reminder sent to ' . $user->name . ' email (' . $user->email . ')');
-        }
+        return view('superAdmin.assignSurvey', compact(['user', 'surveys']));
 
-        $response = Password::sendResetLink(["email" => $user->email]);
 
-        if ($response == Password::RESET_LINK_SENT) {
+
+        // if ($user->inviteSend) {
+        //     Mail::to($user)->send(new SurvayReminderMail());
+        //     return redirect()->route('UserManagement', ['role_id' => 1])->with('success_message', 'Survay Reminder sent to ' . $user->name . ' email (' . $user->email . ')');
+        // }
+
+        // $response = Password::sendResetLink(["email" => $user->email]);
+
+        // if ($response == Password::RESET_LINK_SENT) {
+        //     $user->update(['inviteSend' => true]);
+        //     return redirect()->route('UserManagement', ['role_id' => 1])->with('success_message', 'Survay link sent to ' . $user->name . ' email (' . $user->email . ')');
+        // } else {
+        //     return redirect()->route('UserManagement', ['role_id' => 1])->with('error_message', 'Unable to send  link');
+        // }
+    }
+
+    public function assignSurvey(Request $request)
+    {
+        try {
+            // Assigning survey to the user
+            UserSurvay::create([
+                'user_id' => $request->user_id,
+                'survey_id' => $request->survey_id,
+                'percentCompleted' => 0
+            ]);
+
+            // Finding the user by their ID
+            $user = User::find($request->user_id);
+
+            // Updating inviteSend to true for the user
             $user->update(['inviteSend' => true]);
-            return redirect()->route('UserManagement', ['role_id' => 1])->with('success_message', 'Survay link sent to ' . $user->name . ' email (' . $user->email . ')');
-        } else {
+
+            // Sending a reminder email to the user
+            Mail::to($user)->send(new SurvayReminderMail());
+
+            // Return success response
+            return redirect()->route('UserManagement', ['role_id' => 1])->with('success_message', 'Survay Reminder sent to ' . $user->name . ' email (' . $user->email . ')');
+        } catch (\Exception $e) {
+           
+            // Return error response
             return redirect()->route('UserManagement', ['role_id' => 1])->with('error_message', 'Unable to send  link');
         }
     }

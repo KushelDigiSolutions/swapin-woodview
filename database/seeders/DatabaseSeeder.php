@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             SurvaySeeder::class,
             EvaluationSeeder::class,
-            UserSurveySeeder::class,
             QuestionSeeder::class
         ]);
 

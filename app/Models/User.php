@@ -28,7 +28,8 @@ class User extends Authenticatable
         'role_id',
         'manager_id',
         'inviteSend',
-        'survayCompleted'
+        'survayCompleted',
+        'isSurveyStarted'
     ];
 
     /**
@@ -79,4 +80,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserSurvay::class, 'user_id');
     }
+
+   
 }

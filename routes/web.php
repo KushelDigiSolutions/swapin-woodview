@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\superadminController;
+use App\Http\Controllers\suveyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +18,38 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
+Route::get('/survey', [suveyController::class, 'index'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('survey');
+
+Route::post('/survey/stepOne', [suveyController::class, 'stepOne'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('surveyOne');
+
+Route::post('/survey/stepTwo', [suveyController::class, 'stepTwo'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('surveyTwo');
+
+Route::post('/survey/stepThree', [suveyController::class, 'stepThree'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('surveyThree');
+
+Route::post('/survey/stepFour', [suveyController::class, 'stepFour'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('surveyFour');
+
+Route::post('/survey/stepFive', [suveyController::class, 'stepFive'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('surveyFive');
+
+Route::post('/survey/stepSix', [suveyController::class, 'stepSix'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('surveySix');
+
+
+
+
+
 Route::get('/dashboard', [superadminController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard/allusers', [superadminController::class, 'allUsers'])->middleware(['auth', 'verified'])->name('UserManagement');
 Route::get('/dashboard/adduser', [superadminController::class, 'addUser'])->middleware(['auth', 'verified'])->name('addUser');
@@ -23,6 +57,8 @@ Route::get('/dashboard/edituser', [superadminController::class, 'editUser'])->mi
 
 
 Route::get('/dashboard/allSurvay', [superadminController::class, 'allSurvay'])->middleware(['auth', 'verified'])->name('allSurvay');
+Route::get('/dashboard/responseSurvay', [superadminController::class, 'responseSurvay'])->middleware(['auth', 'verified'])->name('responseSurvay');
+
 Route::get('/dashboard/createSurvay', [superadminController::class, 'createSurvay'])->middleware(['auth', 'verified'])->name('createSurvay');
 Route::post('/dashboard/createNewSurvay', [superadminController::class, 'createNewSurvay'])->middleware(['auth', 'verified'])->name('createNewSurvay');
 
@@ -46,6 +82,8 @@ Route::get('/dashboard/viewSurvayStepFive', [superadminController::class, 'viewS
 Route::get('/dashboard/viewSurvayStepSix', [superadminController::class, 'viewSurvayStepsix'])->middleware(['auth', 'verified'])->name('viewSurvayStepsix');
 
 Route::get('/sendSurvayInvite', [superadminController::class, 'sendSurvayInvite'])->middleware(['auth', 'verified'])->name('sendSurvayInvite');
+Route::post('/assignSurvey', [superadminController::class, 'assignSurvey'])->middleware(['auth', 'verified'])->name('assignSurvey');
+
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

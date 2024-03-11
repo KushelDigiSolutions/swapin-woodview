@@ -9,7 +9,7 @@
                     <li class="inline-flex items-center">
                         <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500"
                             href="#">
-                            {{ Auth::user()->role->role_name }} DashBoard
+                            Your Survey
                         </a>
                         <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400 dark:text-neutral-600"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -20,8 +20,8 @@
                     </li>
                     <li class="inline-flex items-center">
                         <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500"
-                            href="#">
-                            Survay Management
+                            href="{{ route('allSurvay') }}">
+                            {{ $survey->title }}
                             <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400 dark:text-neutral-600"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -32,12 +32,12 @@
                     </li>
                     <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
                         aria-current="page">
-                        View Survay Response
+                        Survey {{ $part }}
                     </li>
                 </ol>
             </div>
             <div>
-                <a href="{{ route('addUser') }}"
+                <a href="{{ route('allSurvay') }}"
                     class="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor">
@@ -45,16 +45,29 @@
                             d="M5 3a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 011 1v12a1 1 0 01-1 1H6a1 1 0 01-1-1V6a1 1 0 011-1h3V3zm5 2H6v12h9V5h-3zM8 8a1 1 0 011-1h2a1 1 0 010 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h2a1 1 0 010 2H9a1 1 0 01-1-1z"
                             clip-rule="evenodd" />
                     </svg>
-                    Create Survay
+                    Back
                 </a>
             </div>
         </div>
     </x-slot>
 
     <div class="py-12">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-100 text-sm">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="p-6 space-y-2 bg-gray-100 text-gray-800">
+                        <h3 class="text-base font-semibold">{{ $part }}: {{ $questions->first()->partTitle }}
+                        </h3>
+                        <div class="flex gap-3">
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                        </div>
+                    </div>
                     @if (session()->has('success_message'))
                         <div class="rounded-md bg-green-50 p-4 mb-4">
                             <div class="flex">
@@ -96,34 +109,74 @@
                             </div>
                         </div>
                     @endif
+                    <h1 class="text-2xl font-bold mb-4 mt-6 text-center">{{ $survey->title }}</h1>
+                    <div class="flex items-center text-sm text-gray-500 mb-2 mx-4 justify-between">
+                        <div>
+                            <span class="mr-2">End Date: {{ $survey->end_date }}</span>
+                            <span>Status: <span
+                                    class="uppercase font-bold {{ $survey->status === 'active' ? 'text-green-500' : 'text-red-500' }}">{{ $survey->status }}</span></span>
 
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead>
-                            <tr>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee Name</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Survey Name</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Progress</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach($usersurveys as $usersurvey)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">{{$usersurvey->id}}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{$usersurvey->user->name}}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{$usersurvey->survey->title}}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="w-full h-2 bg-gray-200 rounded-full">
-                                        <div class="h-full text-center text-xs text-white bg-green-500 rounded-full" style="width: {{$usersurvey->percentCompleted}}%;">{{$usersurvey->percentCompleted}}%</div>
+                        </div>
+                        <div>
+                            <span class="mr-2">Category: {{ $survey->category->name }}</span>
+                            <span>Created by: {{ $survey->creator->name }}</span>
+                        </div>
+
+                    </div>
+
+                    <h2 class="text-xl font-bold mb-4 mx-4">{{ $part }}: {{ $questions->first()->partTitle }}
+                    </h2>
+
+                    @php
+                        $subheads = $questions->pluck('subTitle')->unique()->toArray();
+                    @endphp
+
+                    <form action="{{ route('surveyFour') }}" method="POST" id="partIIForm">
+                        @csrf
+
+                        @foreach ($subheads as $subhead)
+                            <h3 class="font-bold mb-4 mt-4 mx-4">{{ Str::upper($subhead) }}</h3>
+                            @foreach ($questions as $question)
+                                @if ($question->subTitle == $subhead)
+                                    <div class="grid grid-cols-12 gap-1 mb-2 mx-4">
+                                        <!-- First column with 1/12 width -->
+                                        <div class="col-span-1 bg-gray-200 p-2 text-center">{{ $question->id }}</div>
+
+                                        <!-- Second column with 5/12 width -->
+                                        <div class="col-span-7 bg-gray-200 p-2">
+                                            {{ $question->questionText }}
+                                            @if ($question->questionLegend != null)
+                                                <br>
+                                                <span class="text-xs text-blue-400">
+                                                    {{ $question->questionLegend }}
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <!-- Third column with 3/12 width -->
+                                        <div class="col-span-2 bg-gray-200 p-2"></div>
+
+                                        <!-- Fourth column with 3/12 width -->
+                                        <div class="col-span-2 bg-gray-200 p-2"></div>
                                     </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">1961</td>
-                            </tr>
+                                @endif
                             @endforeach
-                        </tbody>
-                    </table>
-                    
+                        @endforeach
+
+
+                        <input type="hidden" name="surveyId" value="{{ $survey->id }}">
+                        <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
+                        <div class="flex justify-end my-6 mx-4 gap-x-1">
+                            <a href="{{ route('viewSurvaySteptwo', ['Id' => $survey->id, 'part' => 'Part III']) }}"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Save
+                            </a>
+                            <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Next Part V
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
