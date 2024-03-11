@@ -22,6 +22,7 @@ class superadminController extends Controller
     public function index()
     {
         $allUsers = User::where('role_id', '!=', 1)->get();
+        
 
         return view('superAdmin.dashboard', compact(['allUsers']));
     }

@@ -12,17 +12,22 @@
                    Hi, {{Auth::user()->name}} {{ __("You're logged in!") }}
                 </div>
             </div> --}}
+            @if (Auth::user()->role->id <3)
             <div class="dash_cards mt-2">
                 <div class="dash_card flex items-center justify-center">
                     <div class="dash_box w-[100%] d1 bg-[#0081CA] shadow-xl" >
                         <div class="num">
-                            <h2>123</h2>
+                            @if(Auth::user()->role->id == 1)
+                            <h2>{{$allUsers->where('survayCompleted',true)->count()}}</h2>
+                            @else
+                            <h2>{{Auth::user()->subordinates()->where('survayCompleted',true)->count()}}</h2>
+                            @endif
                         </div>
                         <div class="txt">
                             <p>Completed Survey</p>
                         </div>
                         <div class="flex_btn flex items-center justify-between">
-                            <button>View All</button>
+                            <a href="dashboard/responseSurvay">View All</a>
                             <svg width="39" height="44" viewBox="0 0 39 44" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g opacity="0.5">
@@ -43,13 +48,17 @@
                     </div>
                     <div class="dash_box w-[100%] d2 bg-[#00A96E] shadow-xl" >
                         <div class="num">
-                            <h2>22</h2>
+                            @if(Auth::user()->role->id == 1)
+                            <h2>{{$allUsers->where('isSurveyStarted',true)->count()}}</h2>
+                            @else
+                            <h2>{{Auth::user()->subordinates()->where('isSurveyStarted',true)->count()}}</h2>
+                            @endif
                         </div>
                         <div class="txt">
                             <p>In Progress Surveys</p>
                         </div>
                         <div class="flex_btn flex items-center justify-between">
-                            <button>View All</button>
+                            <a href="dashboard/responseSurvay">View All</a>
                             <svg width="39" height="44" viewBox="0 0 39 44" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g opacity="0.5">
@@ -71,13 +80,17 @@
                     </div>
                     <div class="dash_box w-[100%] d3 bg-[#FF5861] shadow-xl" >
                         <div class="num">
-                            <h2>22</h2>
+                            @if(Auth::user()->role->id == 1)
+                            <h2>{{$allUsers->where('inviteSend',true)->where('isSurveyStarted',false)->count()}}</h2>
+                            @else
+                            <h2>{{Auth::user()->subordinates()->where('inviteSend',true)->where('isSurveyStarted',false)->count()}}</h2>
+                            @endif
                         </div>
                         <div class="txt">
                             <p>Not Started Surveys</p>
                         </div>
                         <div class="flex_btn flex items-center justify-between">
-                            <button>View All</button>
+                            <a href="dashboard/responseSurvay">View All</a>
                             <svg width="39" height="44" viewBox="0 0 39 44" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g opacity="0.5">
@@ -100,13 +113,17 @@
                     </div>
                     <div class="dash_box w-[100%] d4 bg-[#0081CA] shadow-xl" >
                         <div class="num">
-                            <h2>22</h2>
+                            @if(Auth::user()->role->id == 1)
+                            <h2>{{$allUsers->count()}}</h2>
+                            @else
+                            <h2>{{Auth::user()->subordinates()->count()}}</h2>
+                            @endif
                         </div>
                         <div class="txt">
                             <p>Total Employees</p>
                         </div>
                         <div class="flex_btn flex items-center justify-between">
-                            <button>View All</button>
+                            <a type="button" href="dashboard/allusers?role_id={{Auth::user()->role->id}}">View All</a>
                             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g opacity="0.5">
                                 <g clip-path="url(#clip0_51_686)">
@@ -124,6 +141,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
  
 
