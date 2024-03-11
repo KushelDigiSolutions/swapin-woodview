@@ -119,7 +119,7 @@
                         </div>
                         <div>
                             <span class="mr-2">Category: {{ $survey->category->name }}</span>
-                            <span>Created by: </span>
+                            <span>Created by:  </span>
                         </div>
 
                     </div>
@@ -152,10 +152,9 @@
                                         </div>
 
                                         <!-- Third column with 3/12 width -->
-                                        <div class="col-span-2 bg-gray-200 p-2"></div>
+                                        <div class="col-span-4 bg-gray-200 p-2"></div>
 
-                                        <!-- Fourth column with 3/12 width -->
-                                        <div class="col-span-2 bg-gray-200 p-2"></div>
+                                       
                                     </div>
                                 @endif
                             @endforeach

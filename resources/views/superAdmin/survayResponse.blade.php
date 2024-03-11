@@ -114,16 +114,26 @@
                                 <td class="px-6 py-4 whitespace-nowrap">{{$usersurvey->user->name}}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{$usersurvey->survey->title}}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="w-full h-2 bg-gray-200 rounded-full">
+                                    <div class="min-w-[10rem] h-4 bg-gray-200 rounded-full">
                                         <div class="h-full text-center text-xs text-white bg-green-500 rounded-full" style="width: {{$usersurvey->percentCompleted}}%;">{{$usersurvey->percentCompleted}}%</div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">1961</td>
+                                <td class="px-6 py-4 whitespace-nowrap"></td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+                   
                     
+                </div>
+            </div>
+
+            
+        </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-2">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-100 text-sm">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    {{ $usersurveys->links() }}
                 </div>
             </div>
         </div>

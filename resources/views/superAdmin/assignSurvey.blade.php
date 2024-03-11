@@ -96,9 +96,60 @@
                     </div>
                 </div>
             @endif
-            <div class="max-w-sm w-full rounded overflow-hidden shadow-lg bg-white">
+            <div class="max-w-full w-full rounded overflow-hidden shadow-lg bg-white mb-4">
                 <div class="px-6 py-4">
-                    <form action="{{route('assignSurvey')}}" method="POST">
+                    {{-- @php
+                        print_r($user->userSurveys)
+                    @endphp --}}
+                    <h1 class="mb-2 mx-4">Surveys Alrady Assigned</h1>
+                    <div class="grid grid-cols-12 gap-1 mb-2 mx-4">
+                        <!-- First column with 1/12 width -->
+                        <div class="col-span-2 bg-blue-200 p-2 text-center">
+                            S. No.
+                        </div>
+
+                        <!-- Second column with 5/12 width -->
+                        <div class="col-span-6 bg-blue-200 p-2">
+                            Survey Name
+                        </div>
+
+                        <!-- Second column with 5/12 width -->
+                        <div class="col-span-4 bg-blue-200 p-2">
+                            Send Reminder
+                        </div>
+                    </div>
+                    {{-- Surveys --}}
+                    @foreach ($user->userSurveys as $s)
+                        <div class="grid grid-cols-12 gap-1 mb-2 mx-4">
+                            <!-- First column with 1/12 width -->
+                            <div class="col-span-2 bg-gray-200 p-2 text-center">
+                                {{ $s->id }}
+                            </div>
+
+                            <!-- Second column with 5/12 width -->
+                            <div class="col-span-6 bg-gray-200 p-2">
+                                {{ $s->survey->title }}
+                            </div>
+
+                            <!-- Second column with 5/12 width -->
+                            <div class="col-span-4 bg-gray-200 p-2 flex justify-between items-center">
+                                <button
+                                    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                                    Send Reminder
+                                </button>
+                                <button
+                                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="max-w-full w-full rounded overflow-hidden shadow-lg bg-white">
+                <div class="px-6 py-4">
+                    <form action="{{ route('assignSurvey') }}" method="POST">
                         @csrf
                         <div class="mb-4 flex">
                             <div class="w-1/3 mr-2">
@@ -107,26 +158,29 @@
                                 </label>
                                 <input id="input-field"
                                     class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    type="text" value="{{$user->name}}" readonly>
+                                    type="text" value="{{ $user->name }}" readonly>
                             </div>
-                            <div class="flex-1 ml-2">
+                            <div class="w-2/3 ml-2">
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="select-option">
                                     Select Survey To Assign
                                 </label>
                                 <select id="select-option" name="survey_id"
                                     class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    @foreach($surveys as $survey)
-                                    <option value="{{$survey->id}}">{{Str::upper($survey->title)}}</option>
+                                    @foreach ($surveys as $survey)
+                                        @if (!in_array($survey->id, $user->userSurveys->pluck('survey_id')->toarray()))
+                                            <option value="{{ $survey->id }}">{{ Str::upper($survey->title) }}
+                                            </option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
-                            <input type="hidden" name="user_id" value="{{$user->id}}" readonly>
+                            <input type="hidden" name="user_id" value="{{ $user->id }}" readonly>
                         </div>
                         <div class="flex items-center justify-between">
                             <button
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                 type="submit">
-                                Submit
+                                Send Invite
                             </button>
                         </div>
                     </form>

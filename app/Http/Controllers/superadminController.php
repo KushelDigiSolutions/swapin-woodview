@@ -52,7 +52,7 @@ class superadminController extends Controller
 
     public function responseSurvay(Request $request)
     {
-        $usersurveys = UserSurvay::all();
+        $usersurveys = UserSurvay::paginate(10);
         return view('superAdmin.survayResponse', compact(['usersurveys']));
     }
 
