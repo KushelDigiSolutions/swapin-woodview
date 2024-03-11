@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Survey;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -90,7 +91,9 @@ final class SurvaysTable extends PowerGridComponent
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId)
     {
+        if (Auth::user()->role->id == 1) {
         return redirect()->route('editSurvay', ['Id' => $rowId]);
+        }
     }
 
     #[\Livewire\Attributes\On('view')]
@@ -102,18 +105,20 @@ final class SurvaysTable extends PowerGridComponent
     #[\Livewire\Attributes\On('delete')]
     public function delete($rowId)
     {
-        // Fetch the survey record
-        $survey = Survey::findOrFail($rowId);
+        if (Auth::user()->role->id == 1) {
+            // Fetch the survey record
+            $survey = Survey::findOrFail($rowId);
 
-        // Delete associated records, if any
-        // Assuming there is a relationship between Survey and related records
-        $survey->questions()->delete();
+            // Delete associated records, if any
+            // Assuming there is a relationship between Survey and related records
+            $survey->questions()->delete();
 
-        // Delete the survey record
-        $survey->delete();
+            // Delete the survey record
+            $survey->delete();
 
-        // Refresh the Livewire component
-        $this->refresh();
+            // Refresh the Livewire component
+            $this->refresh();
+        }
     }
 
     public function actions(Survey $row): array

@@ -9,7 +9,7 @@
                     <li class="inline-flex items-center">
                         <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500"
                             href="#">
-                            {{ Auth::user()->role->role_name }} DashBoard
+                            Your Survey
                         </a>
                         <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400 dark:text-neutral-600"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -20,8 +20,8 @@
                     </li>
                     <li class="inline-flex items-center">
                         <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500"
-                            href="#">
-                            Survay Management
+                            href="{{ route('allSurvay') }}">
+                            {{ $survey->title }}
                             <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400 dark:text-neutral-600"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -32,12 +32,12 @@
                     </li>
                     <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
                         aria-current="page">
-                        View Survay Response
+                        Survey {{ $part }}
                     </li>
                 </ol>
             </div>
             <div>
-                <a href="{{ route('addUser') }}"
+                <a href="{{ route('allSurvay') }}"
                     class="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor">
@@ -45,16 +45,29 @@
                             d="M5 3a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 011 1v12a1 1 0 01-1 1H6a1 1 0 01-1-1V6a1 1 0 011-1h3V3zm5 2H6v12h9V5h-3zM8 8a1 1 0 011-1h2a1 1 0 010 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h2a1 1 0 010 2H9a1 1 0 01-1-1z"
                             clip-rule="evenodd" />
                     </svg>
-                    Create Survay
+                    Back
                 </a>
             </div>
         </div>
     </x-slot>
 
     <div class="py-12">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-100 text-sm">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="p-6 space-y-2 bg-gray-100 text-gray-800">
+                        <h3 class="text-base font-semibold">{{ $part }}: {{ $questions->first()->partTitle }}
+                        </h3>
+                        <div class="flex gap-3">
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
+                        </div>
+                    </div>
                     @if (session()->has('success_message'))
                         <div class="rounded-md bg-green-50 p-4 mb-4">
                             <div class="flex">
@@ -96,67 +109,76 @@
                             </div>
                         </div>
                     @endif
+                    <h1 class="text-2xl font-bold mb-4 mt-6 text-center">{{ $survey->title }}</h1>
+                    <div class="flex items-center text-sm text-gray-500 mb-2 mx-4 justify-between">
+                        <div>
+                            <span class="mr-2">End Date: {{ $survey->end_date }}</span>
+                            <span>Status: <span
+                                    class="uppercase font-bold {{ $survey->status === 'active' ? 'text-green-500' : 'text-red-500' }}">{{ $survey->status }}</span></span>
 
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead>
-                            <tr>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee Name</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Survey Name</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Progress</th>
-                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach($usersurveys as $usersurvey)
+                        </div>
+                        <div>
+                            <span class="mr-2">Category: {{ $survey->category->name }}</span>
+                            <span>Created by: </span>
+                        </div>
 
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">{{$usersurvey->id}}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{$usersurvey->user->name}}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{$usersurvey->survey->title}}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="min-w-[10rem] h-4 bg-gray-200 rounded-full">
-                                        <div class="h-full text-center text-xs text-white bg-green-500 rounded-full" style="width: {{$usersurvey->percentCompleted}}%;">{{$usersurvey->percentCompleted}}%</div>
+                    </div>
+
+                    <h2 class="text-xl font-bold mb-4 mx-4">{{ $part }}: {{ $questions->first()->partTitle }}
+                    </h2>
+
+                    @php
+                        $subheads = $questions->pluck('subTitle')->unique()->toArray();
+                    @endphp
+                    <form action="{{ route('surveyFive') }}" method="POST" id="partIIForm">
+                        @csrf
+                        @foreach ($subheads as $subhead)
+                            <h3 class="font-bold mb-4 mt-4 mx-4">{{ Str::upper($subhead) }}</h3>
+                            @foreach ($questions as $question)
+                                @if ($question->subTitle == $subhead)
+                                    <div class="grid grid-cols-12 gap-1 mb-2 mx-4">
+                                        <!-- First column with 1/12 width -->
+                                        <div class="col-span-1 bg-gray-200 p-2 text-center">{{ $question->id }}</div>
+
+                                        <!-- Second column with 5/12 width -->
+                                        <div class="col-span-7 bg-gray-200 p-2">
+                                            {{ $question->questionText }}
+                                            @if ($question->questionLegend != null)
+                                                <br>
+                                                <span class="text-xs text-blue-400">
+                                                    {{ $question->questionLegend }}
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <!-- Third column with 3/12 width -->
+                                        <div class="col-span-4 bg-gray-200 p-2">
+                                            <input type="text" name="answer[{{ $question->id }}]"
+                                                class="w-full py-2 px-3 rounded-md border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                                placeholder="Enter your answer here" required>
+                                        </div>
+
+                                        {{-- <!-- Fourth column with 3/12 width -->
+                                        <div class="col-span-2 bg-gray-200 p-2"></div> --}}
                                     </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    
-                                    <a type="button" href="{{route('manager.survey',['surveyId'=>$usersurvey->survey->id , 'userId' => $usersurvey->user->id])}}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M15.8806 7.454C15.2952 6.174 12.9999 2 7.99991 2C2.99991 2 0.704581 6.174 0.119247 7.454C0.040673 7.62553 0 7.81199 0 8.00067C0 8.18934 0.040673 8.3758 0.119247 8.54733C0.704581 9.826 2.99991 14 7.99991 14C12.9999 14 15.2952 9.826 15.8806 8.546C15.959 8.37466 15.9996 8.18843 15.9996 8C15.9996 7.81157 15.959 7.62534 15.8806 7.454ZM7.99991 12C7.20879 12 6.43543 11.7654 5.77763 11.3259C5.11984 10.8864 4.60715 10.2616 4.3044 9.53073C4.00165 8.79983 3.92243 7.99556 4.07677 7.21964C4.23111 6.44372 4.61208 5.73098 5.17149 5.17157C5.7309 4.61216 6.44363 4.2312 7.21955 4.07686C7.99548 3.92252 8.79974 4.00173 9.53065 4.30448C10.2616 4.60723 10.8863 5.11992 11.3258 5.77772C11.7653 6.43552 11.9999 7.20887 11.9999 8C11.9989 9.06054 11.5771 10.0773 10.8272 10.8273C10.0773 11.5772 9.06045 11.9989 7.99991 12Z" fill="white"/>
-                                            <path d="M7.99992 10.6667C9.47268 10.6667 10.6666 9.47276 10.6666 8C10.6666 6.52724 9.47268 5.33334 7.99992 5.33334C6.52716 5.33334 5.33325 6.52724 5.33325 8C5.33325 9.47276 6.52716 10.6667 7.99992 10.6667Z" fill="white"/>
-                                        </svg>
-                                    </a>
-                                    <button class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded">
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <g clip-path="url(#clip0_82_94)">
-                                            <path d="M3.68066 13.2667H7.22866L9.57466 15.61C9.70075 15.7368 9.85064 15.8374 10.0157 15.906C10.1808 15.9747 10.3579 16.01 10.5367 16.01C10.6543 16.0098 10.7714 15.9948 10.8853 15.9653C11.1155 15.9072 11.3263 15.7895 11.4964 15.624C11.6666 15.4585 11.7902 15.2511 11.8547 15.0227L15.9927 0.949997L3.68066 13.2667Z" fill="white"/>
-                                            <path d="M2.72485 12.3333L15.0482 0.00800323L0.985519 4.15534C0.756543 4.22045 0.548571 4.34431 0.382236 4.51461C0.215902 4.68491 0.0969854 4.89575 0.0372847 5.12619C-0.0224161 5.35664 -0.0208262 5.59869 0.0418965 5.82834C0.104619 6.05798 0.226295 6.26723 0.394852 6.43534L2.72485 8.76334V12.3333Z" fill="white"/>
-                                            </g>
-                                            <defs>
-                                            <clipPath id="clip0_82_94">
-                                            <rect width="16" height="16" fill="white"/>
-                                            </clipPath>
-                                            </defs>
-                                            </svg>
-                                    </button>
-                                   
-                                </td>
-                            </tr>
+                                @endif
                             @endforeach
-                        </tbody>
-                    </table>
-                   
-                    
-                </div>
-            </div>
+                        @endforeach
 
-            
-        </div>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-2">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-100 text-sm">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ $usersurveys->links() }}
+
+                        <input type="hidden" name="surveyId" value="{{ $survey->id }}">
+                        <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
+                        <div class="flex justify-end my-6 mx-4 gap-x-1">
+                            <a href="{{ route('viewSurvaySteptwo', ['Id' => $survey->id, 'part' => 'Part III']) }}"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Save
+                            </a>
+                            <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Next Part VI
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

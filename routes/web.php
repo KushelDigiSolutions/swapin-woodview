@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\ManagerSurvayController;
 use App\Http\Controllers\superadminController;
 use App\Http\Controllers\suveyController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,35 @@ Route::post('/survey/stepFive', [suveyController::class, 'stepFive'])
 Route::post('/survey/stepSix', [suveyController::class, 'stepSix'])
     ->middleware(['auth', 'verified', 'role:admin'])
     ->name('surveySix');
+
+// manager
+Route::get('/survey/manager', [ManagerSurvayController::class, 'index'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('manager.survey');
+
+Route::post('/survey/manager/stepOne', [ManagerSurvayController::class, 'stepOne'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('manager.surveyOne');
+
+Route::post('/survey/manager/stepTwo', [ManagerSurvayController::class, 'stepTwo'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('manager.surveyTwo');
+
+Route::post('/survey/manager/stepThree', [ManagerSurvayController::class, 'stepThree'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('manager.surveyThree');
+
+Route::post('/survey/manager/stepFour', [ManagerSurvayController::class, 'stepFour'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('manager.surveyFour');
+
+Route::post('/survey/manager/stepFive', [ManagerSurvayController::class, 'stepFive'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('manager.surveyFive');
+
+Route::post('/survey/manager/stepSix', [ManagerSurvayController::class, 'stepSix'])
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('manager.surveySix');
 
 
 

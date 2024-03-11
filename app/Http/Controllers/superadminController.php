@@ -22,7 +22,7 @@ class superadminController extends Controller
     public function index()
     {
         $allUsers = User::where('role_id', '!=', 1)->get();
-        
+
 
         return view('superAdmin.dashboard', compact(['allUsers']));
     }
@@ -53,7 +53,18 @@ class superadminController extends Controller
 
     public function responseSurvay(Request $request)
     {
-        $usersurveys = UserSurvay::paginate(10);
+
+        $role_id = Auth::user()->role->id;
+
+        if ($role_id == 1) {
+            $usersurveys = UserSurvay::paginate(10);
+        } else {
+            /** @var \App\User $user */
+            $user =  Auth::user();
+            $subordinates = $user->subordinates()->pluck('id')->toArray();
+            $usersurveys = UserSurvay::whereIn('user_id', $subordinates)->paginate(10);
+        }
+
         return view('superAdmin.survayResponse', compact(['usersurveys']));
     }
 
@@ -250,7 +261,7 @@ class superadminController extends Controller
             // Return success response
             return redirect()->route('UserManagement', ['role_id' => 1])->with('success_message', 'Survay Reminder sent to ' . $user->name . ' email (' . $user->email . ')');
         } catch (\Exception $e) {
-           
+
             // Return error response
             return redirect()->route('UserManagement', ['role_id' => 1])->with('error_message', 'Unable to send  link');
         }

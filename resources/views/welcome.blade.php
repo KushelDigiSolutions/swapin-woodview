@@ -45,7 +45,7 @@
             <div class="mt-16 text-center">
                 <h1 class="text-3xl font-bold text-center mb-4">SURVEY MANAGEMENT SYSTEM</h1>
                 <p class="text-center text-gray-600">Dev version: 0.0.1</p>
-                <p class="text-center font-2xl text-red-600">APPLICATION IS LOCKED</p>
+                {{-- <p class="text-center font-2xl text-red-600">APPLICATION IS LOCKED</p> --}}
             </div>
 
             <div class="flex justify-center mt-16 px-5 sm:items-center sm:justify-between">
