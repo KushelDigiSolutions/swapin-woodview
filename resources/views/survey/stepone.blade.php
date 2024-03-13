@@ -98,6 +98,7 @@
                         </div>
                     @endif
                     <h1 class="text-2xl font-bold mb-4 mt-6 text-center">{{ $survey->title }}</h1>
+                    <h2 class="text-xl font-bold mb-4 mt-6 text-center text-blue-800">{{ __('VIEW ONLY') }}</h2>
                     <div class="flex items-center text-sm text-gray-500 mb-2 mx-4 justify-between">
                         <div>
                             <span class="mr-2">End Date: {{ $survey->end_date }}</span>
@@ -107,7 +108,7 @@
                         </div>
                         <div>
                             <span class="mr-2">Category: {{ $survey->category->name }}</span>
-                            <span>Created by: </span>
+                            <span>Created by: {{ $survey->creater->name }}</span>
                         </div>
 
                     </div>
@@ -123,10 +124,10 @@
                         <div class="col-span-7 bg-gray-200 p-2">{{$question->questionText}}</div>
                         
                         <!-- Third column with 3/12 width -->
-                        <div class="col-span-2 bg-gray-200 p-2">EEMETRFD</div>
+                        <div class="col-span-2 bg-gray-200 p-2">EE ME TR FD</div>
                         
                         <!-- Fourth column with 3/12 width -->
-                        <div class="col-span-2 bg-gray-200 p-2">EEMETRFD</div>
+                        <div class="col-span-2 bg-gray-200 p-2">EE ME TR FD</div>
                     </div>
                     @endforeach
                     {{-- <div class="p-4 space-y-4 text-justify">{!! $survey->description !!}</div>

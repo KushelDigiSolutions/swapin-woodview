@@ -110,7 +110,7 @@
                     @endif
                     <h1 class="text-2xl font-bold mb-4 mt-8 text-center">{{ $survey->title }}</h1>
 
-
+                    <h2 class="text-xl font-bold mb-4 mt-6 text-center text-blue-800">{{ __('VIEW ONLY') }}</h2>
 
                     <div class="flex items-center text-sm text-gray-500 mb-2 mx-4 justify-between">
                         <div>

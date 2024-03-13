@@ -110,6 +110,7 @@
                         </div>
                     @endif
                     <h1 class="text-2xl font-bold mb-4 mt-6 text-center">{{ $survey->title }}</h1>
+                    <h2 class="text-xl font-bold mb-4 mt-6 text-center text-blue-800">{{ __('VIEW ONLY') }}</h2>
                     <div class="flex items-center text-sm text-gray-500 mb-2 mx-4 justify-between">
                         <div>
                             <span class="mr-2">End Date: {{ $survey->end_date }}</span>
@@ -131,6 +132,21 @@
                     @endphp
                     @foreach ($subheads as $subhead)
                         <h3 class="font-bold mb-4 mt-4 mx-4">{{ str::upper($subhead)}}</h3>
+                        <div class="grid grid-cols-12 gap-1 mb-2 mx-4">
+                            <!-- First column with 1/12 width -->
+                            <div class="col-span-1 bg-white p-2 text-center"></div>
+
+                            <!-- Second column with 5/12 width -->
+                            <div class="col-span-7 bg-white p-2">
+                               
+                            </div>
+
+                            <!-- Third column with 3/12 width -->
+                            <div class="col-span-2 bg-blue-200 p-2 text-center">Manager Response</div>
+
+                            <!-- Fourth column with 3/12 width -->
+                            <div class="col-span-2 bg-blue-200 p-2 text-center">User Response</div>
+                        </div>
                         @foreach ($questions as $question)
                             @if ($question->subTitle == $subhead)
                                 <div class="grid grid-cols-12 gap-1 mb-2 mx-4">
@@ -149,10 +165,10 @@
                                     </div>
 
                                     <!-- Third column with 3/12 width -->
-                                    <div class="col-span-2 bg-gray-200 p-2">EEMETRFD</div>
+                                    <div class="col-span-2 bg-gray-200 p-2 text-center">EE ME TR FD</div>
 
                                     <!-- Fourth column with 3/12 width -->
-                                    <div class="col-span-2 bg-gray-200 p-2">EEMETRFD</div>
+                                    <div class="col-span-2 bg-gray-200 p-2 text-center">EE ME TR FD</div>
                                 </div>
                             @endif
                         @endforeach

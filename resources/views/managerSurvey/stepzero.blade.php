@@ -163,8 +163,8 @@
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                     type="submit">Start Survey</button>
                             @else
-                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                            type="button" disabled>{{$surveyUser->name}} has not completed survey</button>
+                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                    type="button" disabled>{{ $surveyUser->name }} has not completed survey</button>
                             @endif
                         </form>
                         {{-- <a href="{{ route('viewSurvaySteptwo', ['Id' => $survey->id, 'part' => 'Part II']) }}"

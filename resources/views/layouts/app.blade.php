@@ -90,6 +90,17 @@
             font-size: 12px;
             background-color: #FFFFFF;
         }
+        .flex_btn a{
+            width: 64px;
+            height: 24px;
+            border-radius: 3px;
+            color: #060606;
+            padding: 2%;
+            text-align: center;
+            font-weight: 400;
+            font-size: 12px;
+            background-color: #FFFFFF;
+        }
         @media only screen and (max-width:1100px){
             .dash_card{
                 flex-wrap: wrap;

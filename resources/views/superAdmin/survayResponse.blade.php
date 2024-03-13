@@ -127,7 +127,7 @@
                                             <path d="M7.99992 10.6667C9.47268 10.6667 10.6666 9.47276 10.6666 8C10.6666 6.52724 9.47268 5.33334 7.99992 5.33334C6.52716 5.33334 5.33325 6.52724 5.33325 8C5.33325 9.47276 6.52716 10.6667 7.99992 10.6667Z" fill="white"/>
                                         </svg>
                                     </a>
-                                    <button class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded">
+                                    <a type="button" href="" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded">
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_82_94)">
                                             <path d="M3.68066 13.2667H7.22866L9.57466 15.61C9.70075 15.7368 9.85064 15.8374 10.0157 15.906C10.1808 15.9747 10.3579 16.01 10.5367 16.01C10.6543 16.0098 10.7714 15.9948 10.8853 15.9653C11.1155 15.9072 11.3263 15.7895 11.4964 15.624C11.6666 15.4585 11.7902 15.2511 11.8547 15.0227L15.9927 0.949997L3.68066 13.2667Z" fill="white"/>
@@ -139,7 +139,7 @@
                                             </clipPath>
                                             </defs>
                                             </svg>
-                                    </button>
+                                        </a>
                                    
                                 </td>
                             </tr>

@@ -32,7 +32,7 @@ class AddUser extends Component
     }
 
     protected $rules = [
-        'name' => 'required|string|min:6',
+        'name' => 'required|string|min:3',
         'email' => 'required|email|unique:users,email',
         'reportsTo' => 'required',
         'role_id' => 'required',
