@@ -5,6 +5,7 @@ use App\Http\Controllers\DirectorSurveyController;
 use App\Http\Controllers\ManagerSurvayController;
 use App\Http\Controllers\superadminController;
 use App\Http\Controllers\suveyController;
+use App\Http\Controllers\UserSurveyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -89,6 +90,10 @@ Route::post('/survey/manager/stepSix', [ManagerSurvayController::class, 'stepSix
 Route::get('/survey/{manager}/{manager_id}/employee_progress', [DirectorSurveyController::class, 'index'])
     ->middleware(['auth', 'verified', 'role:director'])
     ->name('director.employee_progress');
+
+Route::post('/survey/view_compleated', [UserSurveyController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('survey.view_compleated');
 
 
 

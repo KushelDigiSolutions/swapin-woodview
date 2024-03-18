@@ -81,5 +81,10 @@ class User extends Authenticatable
         return $this->hasMany(UserSurvay::class, 'user_id');
     }
 
+    public function getManager()
+    {
+        return User::find($this->manager_id);
+    }
+
    
 }

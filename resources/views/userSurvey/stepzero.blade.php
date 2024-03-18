@@ -190,6 +190,22 @@
                             <span>Created by: {{ $survey->creator->name }}</span>
                         </div>
                     </div>
+                    {{-- button --}}
+                    <div class="flex justify-end my-6 mx-4 gap-x-1">
+                        {{-- <a href="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled">
+                            Previous
+                        </a> --}}
+                        <form action="{{route('survey.view_compleated')}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="surveyId" value="{{$survey->id}}">
+                            <input type="hidden" name="userId" value="{{Auth::user()->id}}">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">View Your Response</button>
+                        </form>
+                        {{-- <a href="{{ route('viewSurvaySteptwo', ['Id' => $survey->id, 'part' => 'Part II']) }}"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                           Start Survey
+                        </a> --}}
+                    </div>
                     @endif
                     
                 </div>
