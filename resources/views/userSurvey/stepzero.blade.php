@@ -57,7 +57,9 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-100 text-sm">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="p-6 space-y-2 bg-gray-100 text-gray-800">
+                        @if(!Auth::user()->userSurveys->where('survey_id',$survey->id)->first()->percentCompleted == 100)
                         <h3 class="text-base font-semibold">Part I: Instructions</h3>
+
                         <div class="flex gap-3">
                             <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
                             <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
@@ -66,6 +68,18 @@
                             <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
                             <span class="w-12 h-2 rounded-sm bg-blue-300"></span>
                         </div>
+                        @else
+                        <h3 class="text-base font-semibold">Survey completed successfully</h3>
+
+                        <div class="flex gap-3">
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                            <span class="w-12 h-2 rounded-sm bg-blue-600"></span>
+                        </div>
+                        @endif
                     </div>
                     @if (session()->has('success_message'))
                         <div class="rounded-md bg-green-50 p-4 mb-4">
@@ -111,7 +125,7 @@
                     <h1 class="text-2xl font-bold mb-4 mt-8 text-center">{{ $survey->title }}</h1>
 
 
-
+                    @if(!Auth::user()->userSurveys->where('survey_id',$survey->id)->first()->percentCompleted == 100)
                     <div class="flex items-center text-sm text-gray-500 mb-2 mx-4 justify-between">
                         <div>
                             <span class="mr-2">End Date: {{ $survey->end_date }}</span>
@@ -124,7 +138,7 @@
                             <span>Created by: {{ $survey->creator->name }}</span>
                         </div>
                     </div>
-
+                    
                     <h2 class="text-xl font-bold mb-10 mx-4">Part I: Instructions</h2>
                     <div class="p-4 space-y-4 text-justify">{!! $survey->description !!}</div>
                     <h3 class="text-lg font-normal mb-4 mx-4">EVALUATION SCALE</h3>
@@ -147,7 +161,6 @@
                             next area/review question.
                         </strong>
                     </div>
-
                     {{-- button --}}
                     <div class="flex justify-end my-6 mx-4 gap-x-1">
                         {{-- <a href="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled">
@@ -164,6 +177,21 @@
                            Start Survey
                         </a> --}}
                     </div>
+                    @else
+                    <div class="flex items-center text-sm text-gray-500 mb-2 mx-4 justify-between">
+                        <div>
+                            <span class="mr-2">End Date: {{ $survey->end_date }}</span>
+                            <span>Status: <span
+                                    class="uppercase font-bold text-green-700">Survey completed successfully.</span>
+
+                        </div>
+                        <div>
+                            <span class="mr-2">Category: {{ $survey->category->name }}</span>
+                            <span>Created by: {{ $survey->creator->name }}</span>
+                        </div>
+                    </div>
+                    @endif
+                    
                 </div>
             </div>
         </div>

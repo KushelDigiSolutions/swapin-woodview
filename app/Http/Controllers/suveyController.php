@@ -172,6 +172,9 @@ class suveyController extends Controller
                 'percentCompleted' => $percentCompleted,
                 'survayCompleted' => true
             ]);
+        // Flash success message
+        session()->flash('success', 'Survey completed successfully.');
+
         return redirect()->route('dashboard');
     }
 }
