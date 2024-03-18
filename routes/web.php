@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\DirectorSurveyController;
 use App\Http\Controllers\ManagerSurvayController;
 use App\Http\Controllers\superadminController;
 use App\Http\Controllers\suveyController;
@@ -17,7 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome');
+// Route::view('/',  function () {
+//     return redirect('/login');
+// });
+
+Route::get('/', function () {
+    return redirect('/login');
+});
 
 Route::get('/survey', [suveyController::class, 'index'])
     ->middleware(['auth', 'verified', 'role:admin'])
@@ -75,6 +82,13 @@ Route::post('/survey/manager/stepFive', [ManagerSurvayController::class, 'stepFi
 Route::post('/survey/manager/stepSix', [ManagerSurvayController::class, 'stepSix'])
     ->middleware(['auth', 'verified', 'role:admin'])
     ->name('manager.surveySix');
+
+
+//director
+
+Route::get('/survey/{manager}/{manager_id}/employee_progress', [DirectorSurveyController::class, 'index'])
+    ->middleware(['auth', 'verified', 'role:director'])
+    ->name('director.employee_progress');
 
 
 
