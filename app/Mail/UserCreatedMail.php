@@ -29,7 +29,7 @@ class UserCreatedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address(Auth::user()->email, Auth::user()->name),
+            //from: new Address(Auth::user()->email, Auth::user()->name),
             subject: 'New User Created',
         );
     }

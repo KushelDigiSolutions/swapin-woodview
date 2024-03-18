@@ -66,7 +66,7 @@ class AddUser extends Component
 
         $manager = User::find($this->reportsTo);
         // $response = Password::sendResetLink(["email" => $this->email]);
-        Mail::to($manager)->send(new  UserCreatedMail());
+        Mail::to($user)->send(new  UserCreatedMail());
        
         $this->reset();
         $this->roles = Role::where('id', '>', Auth::user()->role_id)->get();
