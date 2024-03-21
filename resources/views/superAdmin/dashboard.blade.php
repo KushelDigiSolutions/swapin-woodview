@@ -1,6 +1,8 @@
 <style>
     .flex_btn a{
         height:auto !important;
+        padding:6px 12px !important;
+        width:auto !important;
     }
 </style>
 <x-app-layout>
