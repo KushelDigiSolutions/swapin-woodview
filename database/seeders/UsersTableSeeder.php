@@ -61,7 +61,7 @@ class UsersTableSeeder extends Seeder
         // First, create two directors
         $director1 = User::create([
             'name' => 'Director1',
-            'email' => 'director1@example.com',
+            'email' => 'priyasanchari@gmail.com',
             'password' => Hash::make('password'),
             'role_id' => 2, // Director
             'manager_id' => 1, // No manager for directors
@@ -69,7 +69,7 @@ class UsersTableSeeder extends Seeder
 
         $director2 = User::create([
             'name' => 'Director2',
-            'email' => 'director2@example.com',
+            'email' => 'vswapin@gmail.com',
             'password' => Hash::make('password'),
             'role_id' => 2, // Director
             'manager_id' => 1, // No manager for directors

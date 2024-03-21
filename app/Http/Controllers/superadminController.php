@@ -22,8 +22,6 @@ class superadminController extends Controller
     public function index()
     {
         $allUsers = User::where('role_id', '!=', 1)->get();
-
-
         return view('superAdmin.dashboard', compact(['allUsers']));
     }
 
@@ -252,18 +250,102 @@ class superadminController extends Controller
             // Finding the user by their ID
             $user = User::find($request->user_id);
 
-            // Updating inviteSend to true for the user
-            $user->update(['inviteSend' => true]);
-
             // Sending a reminder email to the user
-            Mail::to($user)->send(new SurvayReminderMail());
+
+
+
+            //find manager
+            $manager = $user->getManager();
+
+            //find role of the manager (if manager , director , superadmin)
+            $role_id = $manager->role->id;
+
+            $flashMessages = [];
+            $emailStatus = [];
+
+            $emailStatus['Employee'] = Mail::to($user->email)->send(new SurvayReminderMail());
+            if ($emailStatus['Employee']) {
+                // Updating inviteSend to true for the user
+                $user->update(['inviteSend' => true]);
+            }
+
+            $flashMessages[] = [
+                'role' => 'Employee',
+                'name' => $user->name,
+                'email' => $user->email,
+                'status' => $emailStatus['Employee'] ? 'Sent' : 'Failed'
+            ];
+
+            switch ($role_id) {
+                case 1:
+                    //send email to manager
+                    $emailStatus['Super Admin'] = Mail::to($manager->email)->send(new SurvayReminderMail());
+                    $flashMessages[] = [
+                        'role' => 'Super Admin',
+                        'name' => $manager->name,
+                        'email' => $manager->email,
+                        'status' => $emailStatus['Super Admin'] ? 'Sent' : 'Failed'
+                    ];
+
+                    break;
+                case 2:
+                    $director = $manager->getManager();
+                    $superAdmin = $director->getManager();
+                    $emailStatus['director'] = Mail::to($director->email)->send(new SurvayReminderMail());
+                    $emailStatus['super_admin'] = Mail::to($superAdmin->email)->send(new SurvayReminderMail());
+                    $flashMessages[] = [
+                        'role' => 'Director',
+                        'name' => $director->name,
+                        'email' => $director->email,
+                        'status' => $emailStatus['director'] ? 'Sent' : 'Failed'
+                    ];
+                    $flashMessages[] = [
+                        'role' => 'Super Admin',
+                        'name' => $superAdmin->name,
+                        'email' => $superAdmin->email,
+                        'status' => $emailStatus['super_admin'] ? 'Sent' : 'Failed'
+                    ];
+                    break;
+                case 3:
+                    $director = $manager->getManager();
+                    $superAdmin = $director->getManager();
+                    $emailStatus['manager'] = Mail::to($manager->email)->send(new SurvayReminderMail());
+                    $emailStatus['director'] = Mail::to($director->email)->send(new SurvayReminderMail());
+                    $emailStatus['super_admin'] = Mail::to($superAdmin->email)->send(new SurvayReminderMail());
+                    $flashMessages[] = [
+                        'role' => 'Manager',
+                        'name' => $manager->name,
+                        'email' => $manager->email,
+                        'status' => $emailStatus['manager'] ? 'Sent' : 'Failed'
+                    ];
+                    $flashMessages[] = [
+                        'role' => 'Director',
+                        'name' => $director->name,
+                        'email' => $director->email,
+                        'status' => $emailStatus['director'] ? 'Sent' : 'Failed'
+                    ];
+                    $flashMessages[] = [
+                        'role' => 'Super Admin',
+                        'name' => $superAdmin->name,
+                        'email' => $superAdmin->email,
+                        'status' => $emailStatus['super_admin'] ? 'Sent' : 'Failed'
+                    ];
+                    break;
+                default:
+                    $flashMessages[] = "Invalid role ID.";
+                    break;
+            }
+
+
+
+
+            session()->flash('flash_messages', $flashMessages);
 
             // Return success response
-            return redirect()->route('UserManagement', ['role_id' => 1])->with('success_message', 'Survay Reminder sent to ' . $user->name . ' email (' . $user->email . ')');
+            return redirect()->route('UserManagement', ['role_id' => 1]);
         } catch (\Exception $e) {
 
-            // Return error response
-            return redirect()->route('UserManagement', ['role_id' => 1])->with('error_message', 'Unable to send  link');
+            session()->flash('error_message', 'Invalid Email Address ('.$e.')');
         }
     }
 }

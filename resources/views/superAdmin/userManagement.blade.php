@@ -83,6 +83,33 @@
                         </div>
                     @endif
 
+                    @if (session()->has('flash_messages'))
+                        @foreach (session('flash_messages') as $message)
+                            <div
+                                class="rounded-md @if ($message['status'] == 'Sent') bg-green-500 @else bg-red-500 @endif p-4 mb-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-5 w-5 @if ($message['status'] == 'Sent') text-green-400 @else text-red-400 @endif"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                            aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM5 9a1 1 0 011-1h1.6a1 1 0 01.7.3l3.3 3.4 2.7-2.7a1 1 0 111.4 1.4l-3 3a1 1 0 01-1.4 0l-4-4a1 1 0 010-1.4l1.5-1.5a1 1 0 011.4 0H14a1 1 0 010 2H7a1 1 0 01-1-1V9z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p
+                                            class="text-sm font-medium @if ($message['status'] == 'Sent') text-green-800 @else text-red-800 @endif">
+                                            Role: {{ $message['role'] }}, Name: {{ $message['name'] }}, Email:
+                                            {{ $message['email'] }}, Status: {{ $message['status'] }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+
+
                     @if (session()->has('error_message'))
                         <div class="rounded-md bg-red-50 p-4 mb-4">
                             <div class="flex">
