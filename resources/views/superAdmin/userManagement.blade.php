@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-5 mt-2">
             {{ __('User Management') }}
         </h2>
-        <div class="flex flex-row justify-between items-center">
+        <div class="flex flex-row justify-between items-center flex-wrap">
             <div>
                 <ol class="flex items-center whitespace-nowrap" aria-label="Breadcrumb">
                     <li class="inline-flex items-center">
