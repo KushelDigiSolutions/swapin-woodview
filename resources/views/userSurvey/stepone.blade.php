@@ -1,12 +1,22 @@
+<style>
+      @media only screen and (max-width:585px){
+    .sd{
+      margin:8px 0px;
+    }
+    .trd{
+      margin:8px 0px;
+    }
+}
+</style>
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-5 mt-2">
             {{ __('My Survay') }}
         </h2>
-        <div class="flex flex-row justify-between items-center">
+        <div class="flex flex-row justify-between items-center flex-wrap">
             <div>
-                <ol class="flex items-center whitespace-nowrap" aria-label="Breadcrumb">
-                    <li class="inline-flex items-center">
+                <ol class="flex items-center flex-wrap" aria-label="Breadcrumb">
+                    <li class="inline-flex items-center sd">
                         <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500"
                             href="#">
                             Your Survey
@@ -18,7 +28,7 @@
                             <path d="m9 18 6-6-6-6" />
                         </svg>
                     </li>
-                    <li class="inline-flex items-center">
+                    <li class="inline-flex items-center sd">
                         <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500"
                             href="{{ route('allSurvay') }}">
                             {{ $survey->title }}
@@ -30,13 +40,13 @@
                             </svg>
                         </a>
                     </li>
-                    <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
+                    <li class="inline-flex items-center sd text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
                         aria-current="page">
                         Survey {{ $part }}
                     </li>
                 </ol>
             </div>
-            <div>
+            <div class="trd">
                 <a href="{{ route('allSurvay') }}"
                     class="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
