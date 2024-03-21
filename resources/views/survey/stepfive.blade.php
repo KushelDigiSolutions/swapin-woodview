@@ -1,5 +1,5 @@
 <style>
-      @media only screen and (max-width:585px){
+      @media only screen and (max-width:841px){
     .sd{
       margin:8px 0px;
     }

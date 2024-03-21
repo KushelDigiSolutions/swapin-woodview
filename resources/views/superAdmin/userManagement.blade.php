@@ -1,5 +1,5 @@
    <style>
-      @media only screen and (max-width:585px){
+      @media only screen and (max-width:841px){
     .sd{
       margin:8px 0px;
     }
@@ -51,7 +51,7 @@
                 </ol>
             </div>
             <div class="trd">
-                <a class="trd" href="{{ route('addUser') }}"
+                <a class href="{{ route('addUser') }}"
                     class="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor">
