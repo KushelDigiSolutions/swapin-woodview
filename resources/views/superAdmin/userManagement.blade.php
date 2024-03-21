@@ -5,7 +5,7 @@
         </h2>
         <div class="flex flex-row justify-between items-center flex-wrap">
             <div>
-                <ol class="flex items-center whitespace-nowrap" aria-label="Breadcrumb">
+                <ol class="flex items-center flex-wrap" aria-label="Breadcrumb">
                     <li class="inline-flex items-center">
                         <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500"
                             href="#">
