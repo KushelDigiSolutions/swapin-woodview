@@ -4,7 +4,7 @@
       margin:8px 0px;
     }
     .trd{
-      margin:8px 0px;
+      margin:8px 0px !important;
     }
 }
    </style>
