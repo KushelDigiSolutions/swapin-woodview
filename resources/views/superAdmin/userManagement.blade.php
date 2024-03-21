@@ -1,3 +1,10 @@
+    <style>
+          @media only screen and (max-width:585px){
+              .sd{
+                margin:8px 0px;
+              }
+          }
+        </style>
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-5 mt-2">
@@ -6,7 +13,7 @@
         <div class="flex flex-row justify-between items-center flex-wrap">
             <div>
                 <ol class="flex items-center flex-wrap" aria-label="Breadcrumb">
-                    <li class="inline-flex items-center">
+                    <li class="inline-flex items-center sd">
                         <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500"
                             href="#">
                             {{ Auth::user()->role->role_name }} DashBoard
@@ -18,7 +25,7 @@
                             <path d="m9 18 6-6-6-6" />
                         </svg>
                     </li>
-                    <li class="inline-flex items-center">
+                    <li class="inline-flex items-center sd">
                         <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500"
                             href="#">
                             User Management
@@ -30,7 +37,7 @@
                             </svg>
                         </a>
                     </li>
-                    <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
+                    <li class="inline-flex items-center sd text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
                         aria-current="page">
                         @if ($role_id == 1)
                             {{ strtoupper('All Users') }}
