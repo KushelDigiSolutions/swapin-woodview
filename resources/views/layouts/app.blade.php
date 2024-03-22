@@ -108,7 +108,7 @@
             width: 62px !important;
             position: fixed;
             background-color: #eeeeee !important;
-            padding: 5px 0px !important;
+            /* padding: 5px 0px !important; */
         }
         @media only screen and (max-width:1100px){
             .dash_card{
