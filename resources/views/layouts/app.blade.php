@@ -104,6 +104,10 @@
         .sjb{
             display: none;
         }
+        .srt{
+            width: 256px;
+            position: fixed;
+        }
         @media only screen and (max-width:1100px){
             .dash_card{
                 flex-wrap: wrap;
@@ -116,6 +120,8 @@
             }
             .sjb{
                 display: block;
+                width: 15px !important;
+                height: 15px !important;
             }
         }
         .man{
@@ -127,7 +133,7 @@
 <body class="font-sans antialiased">
     <livewire:layout.navigation />
     <div class="sidebar">
-        <div>
+        <div class="srt">
             <svg class="sjb" id="such" class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                 <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
