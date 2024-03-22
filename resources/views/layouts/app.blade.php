@@ -19,9 +19,7 @@
         .show {
             display: block !important;
         }
-       .soro{
-        display:block !important;
-       }
+       
         .logout_test {
             position: fixed;
             bottom: 40px;
@@ -103,6 +101,9 @@
             font-size: 12px;
             background-color: #FFFFFF;
         }
+        .man{
+            display: block;
+        }
         @media only screen and (max-width:1100px){
             .dash_card{
                 flex-wrap: wrap;
@@ -111,7 +112,7 @@
 
         @media only screen and (max-width:640px){
             .soro{
-                display:none !important;
+                display:none;
             }
         }
     </style>
@@ -120,7 +121,7 @@
 <body class="font-sans antialiased">
     <livewire:layout.navigation />
     <div class="sidebar">
-         <button>clickjjj</button>
+         <button id="such">clickjjj</button>
         <aside id="sidebar-multi-level-sidebar"
         
             class="fixed top-15 left-0 z-40 soro w-64 h-[95vh] transition-transform -translate-x-full sm:translate-x-0"
@@ -348,6 +349,12 @@
             
             document.getElementById("dropdown-example2").classList.toggle("show");
         }
+
+        const such = document.getElementById("such");
+        const sira = document.getElementById("sidebar-multi-level-sidebar");
+        such.addEventListener("click",()=>{
+             sira.classList.add("man");
+        })
     </script>
 
 </body>
