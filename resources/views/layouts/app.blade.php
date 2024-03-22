@@ -125,7 +125,7 @@
          <button id="such">clickjjj</button>
         <aside id="sidebar-multi-level-sidebar"
         
-            class="fixed top-15 left-0 z-40 soro w-64 h-[95vh] transition-transform -translate-x-full sm:translate-x-0"
+            class="fixed top-15 left-0 z-40 soro w-64 h-[95vh] transition-transform sm:translate-x-0"
             aria-label="Sidebar">
             <div class="h-full px-3 py-4 overflow-y-auto bg-[#000F2B]">
                 <ul class="space-y-2 font-medium">
