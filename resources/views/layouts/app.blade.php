@@ -101,9 +101,7 @@
             font-size: 12px;
             background-color: #FFFFFF;
         }
-        .man{
-            display: block !important;
-        }
+        
         @media only screen and (max-width:1100px){
             .dash_card{
                 flex-wrap: wrap;
@@ -114,6 +112,9 @@
             .soro{
                 display:none;
             }
+        }
+        .man{
+            display: block !important;
         }
     </style>
 </head>
