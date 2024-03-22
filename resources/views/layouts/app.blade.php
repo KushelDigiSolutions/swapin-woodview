@@ -19,7 +19,9 @@
         .show {
             display: block !important;
         }
-    
+       .soro{
+        display:block;
+       }
         .logout_test {
             position: fixed;
             bottom: 40px;
@@ -109,7 +111,7 @@
 
         @media only screen and (max-width:640px){
             .soro{
-                display:none ;
+                display:none;
             }
         }
     </style>
@@ -118,8 +120,9 @@
 <body class="font-sans antialiased">
     <livewire:layout.navigation />
     <div class="sidebar">
-
+         <button>click</button>
         <aside id="sidebar-multi-level-sidebar"
+        
             class="fixed top-15 left-0 z-40 soro w-64 h-[95vh] transition-transform -translate-x-full sm:translate-x-0"
             aria-label="Sidebar">
             <div class="h-full px-3 py-4 overflow-y-auto bg-[#000F2B]">
