@@ -344,7 +344,6 @@ class superadminController extends Controller
             // Return success response
             return redirect()->route('UserManagement', ['role_id' => 1]);
         } catch (\Exception $e) {
-
             session()->flash('error_message', 'Invalid Email Address ('.$e.')');
         }
     }
