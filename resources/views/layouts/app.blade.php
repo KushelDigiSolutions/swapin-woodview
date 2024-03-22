@@ -102,7 +102,7 @@
             background-color: #FFFFFF;
         }
         .man{
-            display: block;
+            display: block !important;
         }
         @media only screen and (max-width:1100px){
             .dash_card{
