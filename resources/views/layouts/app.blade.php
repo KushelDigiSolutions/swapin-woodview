@@ -105,9 +105,10 @@
             display: none;
         }
         .srt{
-            width: 100px !important;
+            width: 62px !important;
             position: fixed;
-            background-color: blueviolet !important;
+            background-color: #eeeeee !important;
+            padding: 5px 0px !important;
         }
         @media only screen and (max-width:1100px){
             .dash_card{
@@ -125,9 +126,10 @@
                 height: 15px !important;
             }
             .srt{
-            width: 100px !important;
+            width: 62px !important;
             position: fixed;
-            background: blueviolet !important;
+            background: #eeeeee !important;
+            padding: 5px 0px !important;
         }
         }
         .man{
