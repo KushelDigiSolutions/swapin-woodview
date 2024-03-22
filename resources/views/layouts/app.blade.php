@@ -114,7 +114,7 @@
             }
         }
         .man{
-            display: block !important;
+            display:block !important;
         }
     </style>
 </head>
@@ -354,7 +354,7 @@
         const such = document.getElementById("such");
         const sira = document.getElementById("sidebar-multi-level-sidebar");
         such.addEventListener("click",()=>{
-             sira.classList.add("man");
+             sira.classList.toggle("man");
         })
     </script>
 
