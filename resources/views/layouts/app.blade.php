@@ -107,6 +107,7 @@
         .srt{
             width: 256px;
             position: fixed;
+            display: none !important;
         }
         @media only screen and (max-width:1100px){
             .dash_card{
@@ -123,6 +124,12 @@
                 width: 15px !important;
                 height: 15px !important;
             }
+            .srt{
+            width: 256px;
+            position: fixed;
+            display: none !important;
+            background: blueviolet !important;
+        }
         }
         .man{
             display:block !important;
