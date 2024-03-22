@@ -103,6 +103,7 @@
         }
         .sjb{
             display: none;
+            margin: 0px 25px !important;
         }
         .srt{
             width: 62px !important;
