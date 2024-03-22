@@ -109,7 +109,7 @@
 
         @media only screen and (max-width:640px){
             .soro{
-                display:none !important;
+                display:none ;
             }
         }
     </style>
