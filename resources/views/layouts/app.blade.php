@@ -105,9 +105,8 @@
             display: none;
         }
         .srt{
-            width: 256px;
+            width: 100px !important;
             position: fixed;
-            display: none !important;
             background-color: blueviolet !important;
         }
         @media only screen and (max-width:1100px){
@@ -126,9 +125,8 @@
                 height: 15px !important;
             }
             .srt{
-            width: 256px;
+            width: 100px !important;
             position: fixed;
-            display: block !important;
             background: blueviolet !important;
         }
         }
