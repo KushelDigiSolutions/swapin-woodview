@@ -103,7 +103,7 @@
         }
         .sjb{
             display: none;
-            margin: 0px 25px !important;
+            margin: 0px 22px !important;
         }
         .srt{
             width: 62px !important;
@@ -125,7 +125,7 @@
                 display: block;
                 width: 15px !important;
                 height: 15px !important;
-                margin: 0px 25px !important;
+                margin: 0px 22px !important;
             }
             .srt{
             width: 62px !important;
