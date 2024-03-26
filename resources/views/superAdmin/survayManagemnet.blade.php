@@ -42,7 +42,7 @@
                     </li>
                     <li class="inline-flex items-center sd text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
                         aria-current="page">
-                      Create Survay
+                      Create Survey
                     </li>
                 </ol>
             </div>
@@ -55,7 +55,7 @@
                             d="M5 3a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 011 1v12a1 1 0 01-1 1H6a1 1 0 01-1-1V6a1 1 0 011-1h3V3zm5 2H6v12h9V5h-3zM8 8a1 1 0 011-1h2a1 1 0 010 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h2a1 1 0 010 2H9a1 1 0 01-1-1z"
                             clip-rule="evenodd" />
                     </svg>
-                    Create Survay
+                    Create Survey
                 </a>
             </div>
         </div>
