@@ -26,13 +26,7 @@ class LoginForm extends Form
     /**
      * Constructor to pre-fill email from URL.
      */
-    public function mount($email = null)
-    {
-       
-        if ($email !== null) {
-            $this->email = $email;
-        }
-    }
+  
 
 
     /**
