@@ -2,32 +2,32 @@
 
 namespace App\Mail;
 
-use App\Models\Survey;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Mail\Mailables\Address;
-use Illuminate\Support\Facades\Auth;
 
-class SurvayInvitationMail extends Mailable
+class SurveyUserIntimation extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $surveyLink;
     public $survey;
-    // public Survey $survay;
+    public $user;
+
 
     /**
      * Create a new message instance.
      */
-    public function __construct($surveyLink, $survey)
+    public function __construct($surveyLink, $survey, $user)
     {
         $this->surveyLink  = $surveyLink;
-        $this->survey = $survey;
+        $this->survey  = $survey;
+        $this->user  = $user;
     }
+
 
     /**
      * Get the message envelope.
@@ -35,18 +35,9 @@ class SurvayInvitationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address(Auth::user()->email, Auth::user()->name),
-            subject: 'Survay Invitation Mail',
-
+            subject: 'New Survey User Intimation',
         );
     }
-
-    // public function build()
-    // {
-    //     return $this->markdown('emails.survayInvitation')->with([
-    //         'resetLink' => $this->resetLink,
-    //     ]);
-    // }
 
     /**
      * Get the message content definition.
@@ -54,7 +45,7 @@ class SurvayInvitationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.survayInvitation',
+            view: 'emails.surveyuserintimation',
         );
     }
 

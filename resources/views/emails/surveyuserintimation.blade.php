@@ -8,7 +8,7 @@
     <style>
         /* Reset styles */
         body,
-        h1,
+        h1,h2,
         p {
             margin: 0;
             padding: 0;
@@ -45,15 +45,14 @@
             <img src="{{ asset('logo/logo.png') }}" alt="Company Logo">
             <h1>Welcome to Our Survey!</h1>
             <h2>{{$survey->title}}</h2>
-           
+            <p>A New Survey had been assigined to user : {{$user->name}}</p><br>
             @php echo ($survey->description); @endphp
-
         </div>
 
         <!-- Content -->
         <p style="text-align: center;"> <!-- Adjusted this line -->
             <a href="{{ $surveyLink }}" style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; margin: 20px; border-radius: 5px;">
-                Start Survey
+                View Survey
             </a>
         </p>
 

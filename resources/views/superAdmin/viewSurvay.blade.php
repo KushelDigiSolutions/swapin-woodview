@@ -134,7 +134,7 @@
                             <span>Created by: {{ $survey->creator->name }}</span>
                         </div>
                     </div>
-                    @if(Auth::user()->userSurveys->where('survey_id',$survey->id)->first()->percentCompleted <= 100)
+                    {{-- @if(Auth::user()->userSurveys->where('survey_id',$survey->id)->first()->percentCompleted <= 100) --}}
                     <h2 class="text-xl font-bold mb-10 mx-4">Part I: Instructions</h2>
                     <div class="p-4 space-y-4 text-justify">{!! $survey->description !!}</div>
                     <h3 class="text-lg font-normal mb-4 mx-4">EVALUATION SCALE</h3>
@@ -168,9 +168,9 @@
                             Next
                         </a>
                     </div>
-                    @else
+                    {{-- @else
                     <h2 class="text-xl font-bold mb-10 mx-4 text-green-600">Survey completed successfully.</h2>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
         </div>

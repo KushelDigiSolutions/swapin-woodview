@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SurvayInvitationMail;
+use App\Mail\SurveyUserIntimation;
 use App\Mail\SurvayReminderMail;
 use App\Models\Question;
 use App\Models\Role;
@@ -251,7 +252,7 @@ class superadminController extends Controller
             $user = User::find($request->user_id);
 
             // Sending a reminder email to the user
-
+            $survey = Survey::find($request->survey_id);
 
 
             //find manager
@@ -263,7 +264,7 @@ class superadminController extends Controller
             $flashMessages = [];
             $emailStatus = [];
 
-            $emailStatus['Employee'] = Mail::to($user->email)->send(new SurvayReminderMail());
+            $emailStatus['Employee'] = Mail::to($user->email)->send(new SurvayInvitationMail($surveyStart = url('survey?surveyId=1'),$survey));
             if ($emailStatus['Employee']) {
                 // Updating inviteSend to true for the user
                 $user->update(['inviteSend' => true]);
@@ -279,7 +280,7 @@ class superadminController extends Controller
             switch ($role_id) {
                 case 1:
                     //send email to manager
-                    $emailStatus['Super Admin'] = Mail::to($manager->email)->send(new SurvayReminderMail());
+                    $emailStatus['Super Admin'] = Mail::to($manager->email)->send(new SurveyUserIntimation($surveyLink = url('dashboard/viewSurvay?Id=1'), $survey, $user));
                     $flashMessages[] = [
                         'role' => 'Super Admin',
                         'name' => $manager->name,
@@ -291,8 +292,8 @@ class superadminController extends Controller
                 case 2:
                     $director = $manager->getManager();
                     $superAdmin = $director->getManager();
-                    $emailStatus['director'] = Mail::to($director->email)->send(new SurvayReminderMail());
-                    $emailStatus['super_admin'] = Mail::to($superAdmin->email)->send(new SurvayReminderMail());
+                    $emailStatus['director'] = Mail::to($director->email)->send(new SurveyUserIntimation($surveyLink = url('dashboard/viewSurvay?Id=1'), $survey, $user));
+                    $emailStatus['super_admin'] = Mail::to($superAdmin->email)->send(new SurveyUserIntimation($surveyLink = url('dashboard/viewSurvay?Id=1'), $survey, $user));
                     $flashMessages[] = [
                         'role' => 'Director',
                         'name' => $director->name,
@@ -309,9 +310,9 @@ class superadminController extends Controller
                 case 3:
                     $director = $manager->getManager();
                     $superAdmin = $director->getManager();
-                    $emailStatus['manager'] = Mail::to($manager->email)->send(new SurvayReminderMail());
-                    $emailStatus['director'] = Mail::to($director->email)->send(new SurvayReminderMail());
-                    $emailStatus['super_admin'] = Mail::to($superAdmin->email)->send(new SurvayReminderMail());
+                    $emailStatus['manager'] = Mail::to($manager->email)->send(new SurveyUserIntimation($surveyLink = url('dashboard/viewSurvay?Id=1'), $survey, $user));
+                    $emailStatus['director'] = Mail::to($director->email)->send(new SurveyUserIntimation($surveyLink = url('dashboard/viewSurvay?Id=1'), $survey, $user));
+                    $emailStatus['super_admin'] = Mail::to($superAdmin->email)->send(new SurveyUserIntimation($surveyLink = url('dashboard/viewSurvay?Id=1'), $survey, $user));
                     $flashMessages[] = [
                         'role' => 'Manager',
                         'name' => $manager->name,
@@ -344,7 +345,7 @@ class superadminController extends Controller
             // Return success response
             return redirect()->route('UserManagement', ['role_id' => 1]);
         } catch (\Exception $e) {
-            session()->flash('error_message', 'Invalid Email Address ('.$e.')');
+            session()->flash('error_message', 'Invalid Email Address (' . $e . ')');
         }
     }
 }
