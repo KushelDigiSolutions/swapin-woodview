@@ -11,7 +11,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-5 mt-2">
-            {{ __('Survay Management') }}
+            {{ __('Survey Management') }}
         </h2>
         <div class="flex flex-row justify-between items-center flex-wrap">
             <div>
