@@ -46,6 +46,18 @@ return [
         //     'local_domain' => env('MAIL_EHLO_DOMAIN'),
         // ],
 
+        //    'smtp' => [
+        //     'transport' => 'smtp',
+        //     'url' => env('MAIL_URL'),
+        //     'host' => 'sandbox.smtp.mailtrap.io',
+        //     'port' => '587',
+        //     'encryption' => 'starttls',
+        //     'username' => '212d23cfbcf3c2',
+        //     'password' => 'a44b593f0da8c4',
+        //     'timeout' => null,
+        //     'local_domain' => env('MAIL_EHLO_DOMAIN'),
+        // ],
+
         'smtp' => [
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),

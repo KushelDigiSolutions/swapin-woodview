@@ -49,7 +49,7 @@
 
         <!-- Content -->
         <p style="text-align: center;"> <!-- Adjusted this line -->
-            <a href="" style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; margin: 20px; border-radius: 5px;">
+            <a href="{{url('/login')}}" style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; margin: 20px; border-radius: 5px;">
                 Login
             </a>
         </p>
