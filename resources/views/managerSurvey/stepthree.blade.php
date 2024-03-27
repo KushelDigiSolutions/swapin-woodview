@@ -141,7 +141,7 @@
                         $subheads = $questions->pluck('subTitle')->unique()->toArray();
                     @endphp
 
-                    <form action="{{ route('surveyFour') }}" method="POST" id="partIIForm">
+                    <form action="{{ route('manager.surveyFour') }}" method="POST" id="partIIForm">
                         @csrf
 
                         @foreach ($subheads as $subhead)
@@ -167,7 +167,7 @@
                                         <div class="col-span-4 bg-gray-200 p-2">
                                             <input type="text" name="answer[{{ $question->id }}]"
                                                 class="w-full py-2 px-3 rounded-md border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                                placeholder="Enter your answer here" required>
+                                                value="{{ $surveyResponses->where('question_id', $question->id)->first()->response }}" readonly>
                                         </div>
 
                                         {{-- <!-- Fourth column with 3/12 width -->
@@ -180,8 +180,10 @@
 
                         <input type="hidden" name="surveyId" value="{{ $survey->id }}">
                         <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
+                        <input type="hidden" name="subordinateId" value="{{ $surveyUser->id }}">
                         <div class="flex justify-end my-6 mx-4 gap-x-1">
-                            <a href="{{ route('viewSurvaySteptwo', ['Id' => $survey->id, 'part' => 'Part III']) }}"
+                            {{-- <a href="{{ route('viewSurvaySteptwo', ['Id' => $survey->id, 'part' => 'Part III']) }}" --}}
+                                    <a href=""
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Save
                             </a>

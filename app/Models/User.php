@@ -68,7 +68,7 @@ class User extends Authenticatable
         $resetToken = $token;
         $resetLink = URL::to('reset-password') . '/' . $resetToken . '?email=' . $this->email;
 
-        Mail::to($this)->send(new SurvayInvitationMail($resetLink));
+        // Mail::to($this)->send(new SurvayInvitationMail($resetLink));
     }
 
     public function subordinates()

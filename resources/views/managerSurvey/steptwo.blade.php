@@ -139,7 +139,7 @@
                     @php
                         $subheads = $questions->pluck('subTitle')->unique()->toArray();
                     @endphp
-                     <form action="{{ route('surveyThree') }}" method="POST" id="partIIForm">
+                     <form action="{{ route('manager.surveyThree') }}" method="POST" id="partIIForm">
                         @csrf
                         @foreach ($subheads as $subhead)
                             <h3 class="font-bold mb-4 mt-4 mx-4">{{ str::upper($subhead) }}</h3>
@@ -163,9 +163,9 @@
                                         <!-- Third column with 3/12 width -->
                                         <div class="col-span-4 bg-gray-200 p-2">
                                             <div class="col-span-4 bg-gray-200 p-2">
-                                                <input type="text" name="answer[{{$question->id}}]"
+                                                <input type="text" name="answer[{{$question->id}}]" value="{{ $surveyResponses->where('question_id', $question->id)->first()->response }}"
                                                     class="w-full py-2 px-3 rounded-md border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                                    placeholder="Enter your answer here" required> 
+                                                    placeholder="Enter your answer here" readonly> 
                                             </div>
 
                                         </div>
@@ -182,6 +182,7 @@
                         {{-- button --}}
                         <input type="hidden" name="surveyId" value="{{ $survey->id }}">
                         <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
+                        <input type="hidden" name="subordinateId" value="{{ $surveyUser->id }}">
                         <div class="flex justify-end my-6 mx-4 gap-x-1">
                             <a href="{{ route('viewSurvaySteptwo', ['Id' => $survey->id, 'part' => 'Part III']) }}"
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
