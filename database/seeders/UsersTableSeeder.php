@@ -80,7 +80,7 @@ class UsersTableSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $manager = User::create([
                 'name' => 'Manager' . ($i + 1),
-                'email' => 'manager' . ($i + 1) . '@example.com',
+                'email' => 'manager' . ($i + 1) . '@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => 3, // Manager
                 'manager_id' => $i % 2 == 0 ? $director1->id : $director2->id, // Alternate between two directors
@@ -91,7 +91,7 @@ class UsersTableSeeder extends Seeder
         for ($i = 0; $i < 20; $i++) {
             $employee = User::create([
                 'name' => $indianNames[array_rand($indianNames)],
-                'email' => 'employee' . ($i + 1) . '@example.com',
+                'email' => 'employee' . ($i + 1) . '@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => 4, // Employee
                 'manager_id' => $managers[$i % 10]->id, // Assign managers in a round-robin manner
