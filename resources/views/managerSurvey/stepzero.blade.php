@@ -169,9 +169,10 @@
                             <input type="hidden" name="surveyId" value="{{ $survey->id }}">
                             <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
                             <input type="hidden" name="SurveyuserId" value="{{ $surveyUser->id }}">
+
                             @if ($surveyUser->survayCompleted)
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                    type="submit">Start Survey</button>
+                                    type="submit">Start Manager Survey</button>
                             @else
                                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                     type="button" disabled>{{ $surveyUser->name }} has not completed survey</button>
