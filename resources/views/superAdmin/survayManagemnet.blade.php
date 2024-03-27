@@ -11,7 +11,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-5 mt-2">
-            {{ __('Survay Management') }}
+            {{ __('Survey Management') }}
         </h2>
         <div class="flex flex-row justify-between items-center flex-wrap">
             <div>
@@ -31,7 +31,7 @@
                     <li class="inline-flex items-center sd">
                         <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500"
                             href="#">
-                            Survay Management
+                            Survey Management
                             <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400 dark:text-neutral-600"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -42,7 +42,7 @@
                     </li>
                     <li class="inline-flex items-center sd text-sm font-semibold text-gray-800 truncate dark:text-gray-200"
                         aria-current="page">
-                      Create Survay
+                      Create Survey
                     </li>
                 </ol>
             </div>
@@ -55,7 +55,7 @@
                             d="M5 3a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 011 1v12a1 1 0 01-1 1H6a1 1 0 01-1-1V6a1 1 0 011-1h3V3zm5 2H6v12h9V5h-3zM8 8a1 1 0 011-1h2a1 1 0 010 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h2a1 1 0 010 2H9a1 1 0 01-1-1z"
                             clip-rule="evenodd" />
                     </svg>
-                    Create Survay
+                    Create Survey
                 </a>
             </div>
         </div>

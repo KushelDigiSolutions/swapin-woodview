@@ -109,6 +109,7 @@
             width: 62px !important;
             position: fixed;
             background-color: #eeeeee !important;
+            z-index: 99;
             /* padding: 5px 0px !important; */
         }
         @media only screen and (max-width:1100px){
