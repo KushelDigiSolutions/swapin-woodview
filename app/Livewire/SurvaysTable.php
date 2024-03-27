@@ -121,6 +121,28 @@ final class SurvaysTable extends PowerGridComponent
         }
     }
 
+    #[\Livewire\Attributes\On('note')]
+    public function note($rowId)
+    {
+        if (Auth::user()->role->id == 1) {
+            // Fetch the survey record
+            $survey = Survey::findOrFail($rowId);
+
+            $this->js('alert("The Note facilities form, Survey: ' .  strtoupper($survey->title) . '"is disabled for testing)');
+
+            // Delete associated records, if any
+            // Assuming there is a relationship between Survey and related records
+            // $survey->questions()->delete();
+
+            // // Delete the survey record
+            // $survey->delete();
+
+            // // Refresh the Livewire component
+            // $this->refresh();
+
+        }
+    }
+
     public function actions(Survey $row): array
     {
         return [
@@ -175,7 +197,7 @@ final class SurvaysTable extends PowerGridComponent
                 </svg>')
                 ->id()
                 ->class('bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded')
-                ->dispatch('delete', ['rowId' => $row->id])
+                ->dispatch('note', ['rowId' => $row->id])
 
         ];
     }
