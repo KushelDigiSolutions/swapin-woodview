@@ -158,7 +158,7 @@
                             <div class="col-span-2 bg-blue-200 p-2 text-center">User Response</div>
                         </div>
                         @foreach ($questions as $question)
-                            @if ($question->subTitle == $subhead)
+                            @if ($question->subTitle == $subhead)   
                                 <div class="grid grid-cols-12 gap-1 mb-2 mx-4">
                                     <!-- First column with 1/12 width -->
                                     <div class="col-span-1 bg-gray-200 p-2 text-center">{{ $question->id }}</div>
@@ -175,10 +175,17 @@
                                     </div>
 
                                     <!-- Third column with 3/12 width -->
-                                    <div class="col-span-2 bg-gray-200 p-2 text-center">EE ME TR FD</div>
-
+                                    <div class="col-span-2 bg-gray-200 p-2 text-center">
+                                        @foreach($managers->where('question_id', $question->id) as $manager)
+                                            {{ $manager->response }}
+                                        @endforeach
+                                    </div>
                                     <!-- Fourth column with 3/12 width -->
-                                    <div class="col-span-2 bg-gray-200 p-2 text-center">EE ME TR FD</div>
+                                    <div class="col-span-2 bg-gray-200 p-2 text-center">
+                                        @foreach($responses->where('question_id', $question->id) as $response)
+                                            {{ $response->response }}
+                                        @endforeach
+                                    </div>
                                 </div>
                             @endif
                         @endforeach

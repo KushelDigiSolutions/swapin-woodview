@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Mail\SurvayInvitationMail;
 use App\Mail\SurveyUserIntimation;
 use App\Mail\SurvayReminderMail;
+use App\Models\ManagerResponse;
 use App\Models\Question;
 use App\Models\Role;
 use App\Models\Survey;
 use App\Models\SurveyCategory;
+use App\Models\SurveyResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserSurvay;
@@ -52,10 +54,10 @@ class superadminController extends Controller
 
     public function responseSurvay(Request $request)
     {
-
         $role_id = Auth::user()->role->id;
 
         if ($role_id == 1) {
+            $user =  Auth::user();
             $usersurveys = UserSurvay::paginate(10);
         } else {
             /** @var \App\User $user */
@@ -130,8 +132,14 @@ class superadminController extends Controller
         $survey = Survey::findOrFail($request->Id);
         $part = "Part II";
         $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
-        //dd($part,$questions);
-        return view('survey.steptwo', compact(['survey', 'part', 'questions']));
+        $questionIds = $questions->pluck('id')->all(); 
+        $responses = SurveyResponse::where('survey_id', $survey->id)
+                               ->whereIn('question_id', $questionIds)
+                               ->get(['question_id', 'response']);
+        $managers = ManagerResponse::where('survey_id', $survey->id)
+                               ->whereIn('question_id', $questionIds)
+                               ->get(['question_id', 'response']);
+        return view('survey.steptwo', compact('survey', 'part', 'questions', 'responses', 'managers'));
     }
 
     public function viewSurvayStepthree(Request $request)
@@ -148,6 +156,7 @@ class superadminController extends Controller
         $survey = Survey::findOrFail($request->Id);
         $part = "Part IV";
         $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
+
         //dd($part,$questions);
         return view('survey.stepfour', compact(['survey', 'part', 'questions']));
     }
