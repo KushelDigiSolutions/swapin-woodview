@@ -1,27 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Mail\SurvayInvitationMail;
-use App\Mail\SurveyUserIntimation;
-use App\Mail\SurvayReminderMail;
-use App\Models\ManagerResponse;
-use App\Models\Question;
-use App\Models\Role;
-use App\Models\Survey;
-use App\Models\SurveyCategory;
-use App\Models\SurveyResponse;
-use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Survey;
 use App\Models\UserSurvay;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Log;
+use App\Models\SurveyResponse;
+use App\Models\ManagerResponse;
+use App\Models\SurveyCategory;
+use Illuminate\Http\Request;
+use App\Models\Role;
+use App\Models\Question;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use App\Mail\SurvayReminderMail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SurvayInvitationMail;
 
-class superadminController extends Controller
+class ExecutiveDirectorController extends Controller
 {
     public function index(Request $request)
     {
@@ -31,7 +26,7 @@ class superadminController extends Controller
         $user_surveys = UserSurvay::whereIn('user_id', $user_id)->get();
         $manager_survey = ManagerResponse::whereIn('subordinate_id', $user_id)->get();
 
-        return view('superAdmin.dashboard', compact(['allUsers', 'user_surveys', 'manager_survey']));
+        return view('executive_director.dashboard', compact(['allUsers', 'user_surveys', 'manager_survey']));
     }
 
     public function getCompletedSurvey()
@@ -53,7 +48,7 @@ class superadminController extends Controller
     {
         $role_id = $request->role_id;
         $roleName = Role::findOrFail($role_id)->role_name;
-        return view('superAdmin.userManagement', compact(['role_id', 'roleName']));
+        return view('executive_director.userManagement', compact(['role_id', 'roleName']));
     }
 
     public function addUser()
@@ -67,17 +62,16 @@ class superadminController extends Controller
         return view('dashboard.edituser', compact(['userId']));
     }
 
-
     public function allSurvay(Request $request)
     {
-        return view('superAdmin.survayManagemnet');
+        return view('executive_director.survayManagemnet');
     }
 
     public function responseSurvay(Request $request)
     {
         $role_id = Auth::user()->role->id;
 
-        if ($role_id == 1) {
+        if ($role_id == 2) {
              $usersurveys = UserSurvay::paginate(10);
 
              $names = [];
@@ -112,14 +106,14 @@ class superadminController extends Controller
             }
         }
 
-        return view('superAdmin.survayResponse', compact(['usersurveys', 'names', 'titles']));
+        return view('executive_director.survayResponse', compact(['usersurveys', 'names', 'titles']));
     }
 
     public function completedSurvays(Request $request)
     {
         $role_id = Auth::user()->role->id;
 
-        if ($role_id == 1) {
+        if ($role_id == 2) {
             $usersurveys = UserSurvay::where('percentCompleted', 100)->paginate(10);
             $percentage = $usersurveys->pluck('percentCompleted')->toArray();
 
@@ -156,15 +150,14 @@ class superadminController extends Controller
         }
 
 
-        return view('superAdmin.completedSurvays', compact(['usersurveys', 'names', 'titles', 'percentage']));
+        return view('executive_director.completedSurvays', compact(['usersurveys', 'names', 'titles', 'percentage']));
     }
-
-
+    
     public function progressSurvays(Request $request)
     {
         $role_id = Auth::user()->role->id;
 
-        if ($role_id == 1) {
+        if ($role_id == 2) {
             $usersurveys = UserSurvay::where('percentCompleted', '<', 100)
             ->where('percentCompleted', '>', 0)
             ->paginate(10);
@@ -205,15 +198,14 @@ class superadminController extends Controller
             }
         }
 
-        return view('superAdmin.progressSurvays', compact(['usersurveys', 'names', 'titles', 'percentage']));
+        return view('executive_director.progressSurvays', compact(['usersurveys', 'names', 'titles', 'percentage']));
     }
-
 
     public function notstartedSurvays(Request $request)
     {
         $role_id = Auth::user()->role->id;
 
-        if ($role_id == 1) {
+        if ($role_id == 2) {
             $usersurveys = UserSurvay::where('percentCompleted', 0)->paginate(10);
              $percentage = $usersurveys->pluck('percentCompleted')->toArray();
 
@@ -249,15 +241,13 @@ class superadminController extends Controller
             }
         }
 
-        return view('superAdmin.notstartedSurvays', compact(['usersurveys', 'names', 'titles', 'percentage']));
+        return view('executive_director.notstartedSurvays', compact(['usersurveys', 'names', 'titles', 'percentage']));
     }
-
-
 
     public function editSurvay(Request $request)
     {
         $survey = Survey::findOrFail($request->Id);
-        return view('superAdmin.editSurvey', compact(['survey']));
+        return view('executive_director.editSurvey', compact(['survey']));
     }
 
     public function updateQuestion(Request $request)
@@ -300,17 +290,8 @@ class superadminController extends Controller
     public function viewSurvay(Request $request)
     {
         $survey = Survey::findOrFail($request->Id);
-        return view('superAdmin.viewSurvay', compact(['survey']));
+        return view('executive_director.viewSurvay', compact(['survey']));
     }
-
-    // public function viewSurvayStepOne(Request $request)
-    // {
-    //     $survey = Survey::findOrFail($request->Id);
-    //     $part = "Part II"
-    //     $questions = Question::where('survey_id', $survey->id)->where('part', $part)->get();
-    //     //dd($part,$questions);
-    //     return view('survey.stepone', compact(['survey', 'part', 'questions']));
-    // }
 
     public function viewSurvaySteptwo(Request $request)
     {
@@ -326,7 +307,7 @@ class superadminController extends Controller
                                ->get(['question_id', 'response']);
         return view('survey.steptwo', compact('survey', 'part', 'questions', 'responses', 'managers'));
     }
-
+    
     public function viewSurvayStepthree(Request $request)
     {
         $survey = Survey::findOrFail($request->Id);
@@ -403,27 +384,20 @@ class superadminController extends Controller
         return view('survey.stepsix', compact(['survey', 'part', 'questions' , 'responses', 'managers']));
     }
 
-
-
-
-
     public function createSurvay(Request $request)
     {
         $survayCategories = SurveyCategory::all();
 
         return view(
-            'superAdmin.createSurvay',
+            'executive_director.createSurvay',
             compact([
                 'survayCategories'
             ])
         );
     }
 
-
     public function createNewSurvay(Request $request)
     {
-
-
 
         $validator = Validator::make($request->all(), [
             'category_id' => ['required', 'integer', 'exists:survey_categories,id'], // Ensure category_id exists in the SurveyCategory model
@@ -444,8 +418,6 @@ class superadminController extends Controller
         }
         return back()->with('error_message', 'Something went worng.');
     }
-
-
 
     public function sendSurvayInvite(Request $request)
     {
@@ -483,7 +455,7 @@ class superadminController extends Controller
             
         }
 
-        return view('superAdmin.assignSurvey', compact('user', 'surveys', 'other_surveys', 'percentCompleted'));
+        return view('executive_director.assignSurvey', compact('user', 'surveys', 'other_surveys', 'percentCompleted'));
     
         // Check if the user's invite has already been sent
         // if ($user->inviteSend) {
@@ -508,7 +480,6 @@ class superadminController extends Controller
         // }
     }
 
-
     public function sendReminder(Request $request)
     {
         // Retrieve the user and survey based on the request
@@ -518,10 +489,9 @@ class superadminController extends Controller
         Mail::to($user->email)->send(new SurvayReminderMail($survey));
 
         // Redirect back with a success message
-        return redirect()->route('UserManagement', ['role_id' => 1])
+        return redirect()->route('UserManagement', ['role_id' => 2])
                                 ->with('success_message', 'Survey Reminder sent to ' . $user->name . ' email (' . $user->email . ')');
    }
-
 
     public function delete($surveyId)
     {
@@ -584,9 +554,13 @@ class superadminController extends Controller
             session()->flash('flash_messages', $flashMessages);
 
             // Return success response
-            return redirect()->route('UserManagement', ['role_id' => 1]);
+            return redirect()->route('UserManagement', ['role_id' => 2]);
         } catch (\Exception $e) {
             session()->flash('error_message', 'Invalid Email Address (' . $e . ')');
         }
     }
+
+
+
+
 }
