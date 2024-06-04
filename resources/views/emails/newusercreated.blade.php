@@ -69,7 +69,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>Contact us at <a href="mailto:info@example.com">info@example.com</a></p>
+            <p>Contact us at <a href="mailto:info@codepxl.com">info@codepxl.com</a></p>
         </div>
     </div>
 </body>
