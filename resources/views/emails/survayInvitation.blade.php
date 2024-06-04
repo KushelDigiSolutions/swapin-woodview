@@ -64,7 +64,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>Contact us at <a href="mailto:text@gmail.com">admin</a></p>
+            <p>Contact us at <a href="mailto:info@codepxl.com">info@codepxl.com</a></p>
         </div>
     </div>
 </body>
