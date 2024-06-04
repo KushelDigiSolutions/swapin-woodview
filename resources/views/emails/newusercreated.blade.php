@@ -69,7 +69,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>Contact us at <a href="mailto:woodviewhr@woodview.ca">woodviewhr@woodview.ca</a></p>
+            <p>Contact us at <a href="mailto:info@codepxl.com">info@codepxl.com</a></p>
         </div>
     </div>
 </body>
