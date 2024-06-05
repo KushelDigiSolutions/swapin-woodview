@@ -38,7 +38,7 @@ class SurvayReminderMail extends Mailable
     {
         return new Envelope(
             // from: new Address(Auth::user()->email, Auth::user()->name),
-            subject: 'Survay Reminder Mail',
+            subject: 'Survey Reminder Mail',
         );
     }
 
