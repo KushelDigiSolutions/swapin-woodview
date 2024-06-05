@@ -43,25 +43,25 @@
         <!-- Header -->
         <div class="header">
             <img src="{{ asset('logo/logo.png') }}" alt="Company Logo">
-            <h1>Reminder to Our Survey!</h1>
+            <h1>Reminder to Our Survay!</h1>
             {{-- <p>Need to Set New Password on login</p> --}}
         </div>
 
         <!-- Content -->
         <p style="text-align: center;"> <!-- Adjusted this line -->
             <a href={{url('/dashboard')}} style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; margin: 20px; border-radius: 5px;">
-                Continue Survey
+                Continue Survay
             </a>
         </p>
 
         <hr>
         <small>
-            If you're having trouble clicking the "Start Survey" button, copy and paste the URL below into your web browser.  <!-- Adjusted this line -->
+            If you're having trouble clicking the "Start Survay" button, copy and paste the URL below into your web browser.  <!-- Adjusted this line -->
         </small>
 
         <!-- Footer -->
         <div class="footer">
-            <p>Contact us at <a href="mailto:info@codepxl.com">info@codepxl.com</a></p>
+            <p>Contact us at <a href="mailto:woodviewhr@woodview.ca">woodviewhr@woodview.ca</a></p>
         </div>
     </div>
 </body>

@@ -43,7 +43,7 @@
         <!-- Header -->
         <div class="header">
             <img src="{{ asset('logo/logo.png') }}" alt="Company Logo">
-            <h1>Welcome to Our Survey!</h1>
+            <h1>Welcome to Our Survay!</h1>
             <h2>{{$survey->title}}</h2>
            
             @php echo ($survey->description); @endphp
@@ -53,18 +53,18 @@
         <!-- Content -->
         <p style="text-align: center;"> <!-- Adjusted this line -->
             <a href="{{ $surveyLink }}" style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; margin: 20px; border-radius: 5px;">
-                Start Survey
+                Start Survay
             </a>
         </p>
 
         <hr>
         <small>
-            If you're having trouble clicking the "Start Survey" button, copy and paste the URL below into your web browser: {{  $surveyLink }} <!-- Adjusted this line -->
+            If you're having trouble clicking the "Start Survay" button, copy and paste the URL below into your web browser: {{  $surveyLink }} <!-- Adjusted this line -->
         </small>
 
         <!-- Footer -->
         <div class="footer">
-            <p>Contact us at <a href="mailto:info@codepxl.com">info@codepxl.com</a></p>
+            <p>Contact us at <a href="mailto:woodviewhr@woodview.ca">woodviewhr@woodview.ca</a></p>
         </div>
     </div>
 </body>
