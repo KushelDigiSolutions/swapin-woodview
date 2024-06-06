@@ -37,7 +37,7 @@ class SurvayInvitationMail extends Mailable
         return new Envelope(
             // from: new Address(Auth::user()->email, Auth::user()->name),
 
-            subject: 'Survey Invitation Mail',
+            subject: 'Survay Invitation Mail',
 
         );
     }

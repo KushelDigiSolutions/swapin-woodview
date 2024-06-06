@@ -58,7 +58,7 @@
 
         <hr>
         <small>
-            If you're having trouble clicking the "Start Survay" button, copy and paste the URL below into your web browser: {{  $surveyLink }} <!-- Adjusted this line -->
+            If you're having trouble clicking the "Start Survey" button, copy and paste the URL below into your web browser: {{  $surveyLink }} <!-- Adjusted this line -->
         </small>
 
         <!-- Footer -->
